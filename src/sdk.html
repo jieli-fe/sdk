@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+</head>
+
+<body>
+    <div id="LSmap" style="height:400px;width:400px;"></div>
+</body>
+<script>
+    Ls.map("LSmap", {
+        center: [31.24, 121.15],
+        zoom: 10,
+        mapType: 'map',
+        key: '48755a5ab4064e7a91b60ddecc3d8c11',
+    });
+    //shipid=413472680&key=5cdd7336161c4ce2  a27a21d770b8aa53 & startUtcTime=1512108577 & endUtcTime=1512972577
+    // 
+    var shipObject = Ls.ship(636015511);
+    Ls.trace(636015511, 1544508577, 1545372577);
+    setTimeout(() => {
+
+        shipObject.setImg();
+        // Ls.trace(636015511, 1544508577, 1545372577);
+    }, 1500);
+</script>
+
+</html>
