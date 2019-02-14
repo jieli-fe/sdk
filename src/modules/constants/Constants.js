@@ -10,8 +10,11 @@ export default {
     CHART_URL: ["http://emap.shipdt.com/"],
     CHART_ERROR: "http://www.loongship.com/404.png",
     MIN_POINT_DISTANCE: 50,
-    DEFAULTX: 106,
-    DEFAULTY: 24,
+    DEFAULTX: 123,
+    DEFAULTY: 31,
+    DEFAULT_ZOOM: 2,
+    MAX_ZOOM: 18,
+    MIN_ZOOM: 0,
     LATLON: 600000,
     SERVER_URL: "http://www.shipdt.com/lvservice",
     PORT_CALL_HIS: "PORT_CALL_HIS", //

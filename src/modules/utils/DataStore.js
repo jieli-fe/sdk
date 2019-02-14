@@ -52,14 +52,12 @@ class DataStore {
     }
 }
 
-var storeobject = null;
+var storeObject = null;
 var datastore = function () {
-    if (!storeobject) {
-        storeobject = new DataStore();
+    if (!storeObject) {
+        storeObject = new DataStore();
     }
-    return storeobject;
+    return storeObject;
 }();
 
-export {
-    datastore
-}
+export {datastore}

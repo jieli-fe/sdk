@@ -1,87 +1,94 @@
 /***
- * 
- * 地图对象
- */
-/**
  *
- *
+ * 地图类
  * @export
- * @class MapObject
+ * @class Map
  */
 import L from "leaflet"
-
 import Constants from "../constants/Constants";
 import GlobalKey from "../constants/Globalkey";
 import Eventkey from "../constants/Eventkey";
-import {
-    datastore
-} from "../utils/DataStore";
-import {
-    Events
-} from "../utils/EventManageUtil";
-import {
-    ChartLayer
-} from "../utils/ChartLayer";
-import {
-    LonLatTrans
-} from "../utils/GpsCorrect";
+import { datastore as dataStore } from "../utils/DataStore";
+import { Events } from "../utils/EventManageUtil";
+import { ChartLayer } from "../utils/ChartLayer";
+import { LonLatTrans } from "../utils/GpsCorrect";
 import Globalkey from "../constants/Globalkey";
 export default class MapObject {
-    constructor(containerId, customOptions) {
-        this.options = Object.create({
+    constructor(containerId = "map", options) {
+
+        this.defaultOptions = {
+            //初始地图中心点
+            center: [Constants.DEFAULTY, Constants.DEFAULTX],
+            // 初始地图缩放级别
+            zoom: Constants.DEFAULT_ZOOM,
+            //坐标系统
+            crs: L.CRS.EPSG3857,
+            //是否支持地图拖拽
+            dragable: true,
+            //是否支持 canvas
+            preferCanvas: false,
+            //版权组件
+            attributionControl: false,
+            //缩放组件
+            zoomControl: true,
+            //点击时候关闭 popup
+            closePopupOnClick: false,
+            //地图最大/最小缩放级别
+            maxZoom: 18,
+            minZoom: 2,
+            //鼠标滚轴事件
+            zoomable: true,
+            //用户 key
+            key: '',
+            mapType: "map", //'map'/'sat'/'chart'
             mapobject: "", //地图对象
-            mapLayer: L.layerGroup([])
-        });
-        this.mapChangeEvent = this.mapChangeEvent.bind(this);
+            mapLayer: L.layerGroup([])  //图层
+        }
+
+        this.options = Object.assign(this.defaultOptions, options)
+
         Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "MAPOBJECT-SELF-CHANGE", this.mapChangeEvent);
         L.Browser.touch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
-        this.initmap(containerId, customOptions);
+        this.initialize(containerId, options);
     }
-    initmap(containerId, customOptions) {
-        try {
-            if (!containerId) {
-                throw "container id con not be null";
-            }
-            if (customOptions && customOptions.key) {
-                this.setKey(customOptions.key);
-            }
-            //是否可拖动
-            let dragable = true;
-            if (customOptions && customOptions.dragable === false) {
-                dragable = false;
-            }
-            let zoomable = true;
-            if (customOptions && customOptions.zoomable === false) {
-                zoomable = false;
-            }
-            var map = new L.Map(containerId, {
-                center: new L.latLng(customOptions.center[0] || Constants.DEFAULTY, customOptions.center[1] || Constants.DEFAULTX),
-                zoom: customOptions.zoom || 4,
-                crs: L.CRS.EPSG3857,
-                scrollWheelZoom: zoomable, //不能缩放
-                dragging: dragable, //是否可拖动
-                closePopupOnClick: false,
-                maxZoom: 18,
-                minZoom: 2
-            });
-            this.options.mapobject = map;
-            this.drawMapLayer();
-            map.addLayer(this.options.mapLayer);
-            this.mapbounds(map);
-            this.mapZoomEvent(map);
-            this.mapMouseMove(map);
-            this.mapMoveEvent(map);
-            //全局地图对象
-            datastore.saveData(GlobalKey.MAPOBJECT, map);
-            if (customOptions && customOptions.mapType) {
-                this.setMapType(customOptions.mapType);
-            }
-        } catch (error) {
-            console.log(error);
-        }
+    _arrayToLatLng(arr) {
+        return Array.isArray(arr) && arr.length > 1
+            ? new L.latLng(arr[0], arr[1])
+            : null
+    }
+    initialize = (containerId, options) => {
+        //转换中心点坐标
+        this.options.center = this._arrayToLatLng(this.options.center)
+        //设置用户的 key
+        this.setKey(this.options.key);
+        //初始化 map 对象
+        var map = new L.Map(containerId, this.options);
+
+        //挂在到 this.map
+        this.map = map
+
+        //初始化图层嵌入
+        this.map.addLayer(this.options.mapLayer);
+
+        //设置地图类型
+        this.setMapType(this.options.mapType);
+
+        //限制地图边界
+        this.mapBounds(map);
+
+        //地图放大结束事件
+        this.mapZoomEvent(map);
+
+        //地图鼠标移动事件
+        this.mapMouseMove(map);
+        this.mapMoveEvent(map);
+
+        //全局地图对象
+        dataStore.saveData(GlobalKey.MAPOBJECT, this.map);
     }
 
-    mapbounds(mapview) {
+    mapBounds(mapview) {
+        //限制地图边界
         let southWest = new L.latLng(-90, -720);
         let northEast = new L.latLng(90, 720);
         let bounds = new L.latLngBounds(southWest, northEast);
@@ -119,8 +126,9 @@ export default class MapObject {
      *地图切换事件
      * @memberof MapObject
      */
-    mapChangeEvent() {
-        var mapType = datastore.getData(Globalkey.GLOBAL_MAP_TYPE);
+    mapChangeEvent = () => {
+        var mapType = dataStore.getData(Globalkey.GLOBAL_MAP_TYPE);
+        console.log("当前地图类型: ", mapType)
         this.options.mapLayer.clearLayers();
         switch (mapType) {
             case Constants.CHAT_MAP_TYPE:
@@ -142,12 +150,12 @@ export default class MapObject {
      */
     drawChatLayer() {
         var chatLayer = ChartLayer("", {
-            maxZoom: 18,
-            minZoom: 2,
+            maxZoom: Constants.MAX_ZOOM,
+            minZoom: Constants.MIN_ZOOM,
             continuousWorld: true,
             id: 'chart'
         });
-        L.Util.setOptions(map, {
+        L.Util.setOptions(this.map, {
             crs: L.CRS.EPSG3395
         });
         this.options.mapLayer.addLayer(chatLayer);
@@ -160,14 +168,14 @@ export default class MapObject {
      */
     drawSiteLayer() {
         var imgLayer = new L.tileLayer(Constants.STATE_URL_NEW, {
-            maxZoom: 18,
-            minZoom: 2,
+            maxZoom: Constants.MAX_ZOOM,
+            minZoom: Constants.MIN_ZOOM,
             continuousWorld: true,
             id: 'sate'
         });
         var gridLayer = new L.tileLayer(Constants.STATE_URL_GIRD, {
-            maxZoom: 18,
-            minZoom: 2,
+            maxZoom: Constants.MAX_ZOOM,
+            minZoom: Constants.MIN_ZOOM,
             continuousWorld: true,
             id: 'sate',
             zIndex: 10
@@ -185,14 +193,14 @@ export default class MapObject {
      * @memberof MapObject
      */
     drawMapLayer() {
-        var layer = new L.tileLayer(Constants.MAP_URL2, {
+        let layer = new L.tileLayer(Constants.MAP_URL2, {
             subdomains: [0, 1, 2, 3],
-            maxZoom: 21,
-            minZoom: 2,
+            maxZoom: Constants.MAX_ZOOM,
+            minZoom: Constants.MIN_ZOOM,
             continuousWorld: true,
             id: 'mapbox.streets'
         });
-        L.Util.setOptions(this.options.mapobject, {
+        L.Util.setOptions(this.map, {
             crs: L.CRS.EPSG3857
         });
         this.options.mapLayer.addLayer(layer);
@@ -205,43 +213,39 @@ export default class MapObject {
      * @memberof MapObject
      */
     setOptions(options) {
-        try {
-            /***
-             * 
-             * zoom center dragable  zoomable   
-             * * */
-            if (options && options.mapType) {
-                this.setMapType(options.mapType);
-            }
-            if (options && options.key) {
-                this.setKey(options.key);
-            }
-            let zoomable = true;
-            let map = this.options.mapobject;
-            //是否可缩放
-            if (options && options.zoomable === false) {
-                zoomable = false;
-            }
-            //是否可拖动
-            let dragable = true;
-            if (options && options.dragable === false) {
-                dragable = false;
-            }
-            L.Util.setOptions(map, {
-                scrollWheelZoom: zoomable,
-                dragging: dragable
-            });
-            //设置中心点
-            if (options && options.center) {
-                this.setCenter(options.center[0], options.center[1]);
-            }
-            //设置层级
-            if (options && options.zoom) {
-                this.setZoom(options.zoom);
-            }
-        } catch (error) {
-            console.log(error);
+        if (!options) return null
+
+        if (options.mapType) {
+            this.setMapType(options.mapType);
         }
+        if (options.key) {
+            this.setKey(options.key);
+        }
+
+        let zoomable = true;
+        
+        //是否可缩放
+        if (options && options.zoomable === false) {
+            zoomable = false;
+        }
+        //是否可拖动
+        let dragable = true;
+        if (options && options.dragable === false) {
+            dragable = false;
+        }
+        L.Util.setOptions(this.map, {
+            scrollWheelZoom: zoomable,
+            dragging: dragable
+        });
+        //设置中心点
+        if (options && options.center) {
+            this.setCenter(options.center[0], options.center[1]);
+        }
+        //设置层级
+        if (options && options.zoom) {
+            this.setZoom(options.zoom);
+        }
+
     }
     /**
      *
@@ -249,12 +253,11 @@ export default class MapObject {
      * @memberof MapObject
      */
     setCenter(lat, lng) {
-        let mapview = this.options.mapobject;
         let lonlat = LonLatTrans(lat, lng);
-        mapview.setView(lonlat, mapview.getZoom());
+        this.map.setView(lonlat, mapview.getZoom());
     }
     getCenter() {
-        return this.options.mapobject.getCenter();
+        return this.map.getCenter();
     }
     /**
      *
@@ -263,11 +266,11 @@ export default class MapObject {
      * @memberof MapObject
      */
     setZoom(zoomNumber) {
-        this.options.mapobject.setZoom(zoomNumber);
+        this.map.setZoom(zoomNumber);
     }
     //获取当前地图层级
     getZoom() {
-        return this.options.mapobject.getZoom();
+        return this.map.getZoom();
     }
 
     /**
@@ -277,16 +280,14 @@ export default class MapObject {
      * @memberof MapObject
      */
     setMapType(maptype) {
+        if (!maptype) return
+        dataStore.saveData(Globalkey.GLOBAL_MAP_TYPE, maptype);
         //触发事件
-        if (maptype) {
-            datastore.saveData(Globalkey.GLOBAL_MAP_TYPE, maptype);
-            //触发事件
-            Events.fire(Eventkey.MAP_TYPE_CHANGE_KEY);
-        }
+        Events.fire(Eventkey.MAP_TYPE_CHANGE_KEY);
     }
 
     getMapType() {
-        return datastore.getData(Globalkey.GLOBAL_MAP_TYPE);
+        return dataStore.getData(Globalkey.GLOBAL_MAP_TYPE);
     }
     /**
      *
@@ -295,9 +296,7 @@ export default class MapObject {
      * @memberof MapObject
      */
     setKey(datakey) {
-        if (datakey) {
-            datastore.saveData(GlobalKey.GLOBAL_DATA_KEY, datakey);
-        }
+        datakey && dataStore.saveData(GlobalKey.GLOBAL_DATA_KEY, datakey);
     }
 
     /**
