@@ -50,4 +50,5 @@ var LoongshipMap = function name(params) {
 
 module.exports = function(){
     console.log(111)
+    return "111"
 }
