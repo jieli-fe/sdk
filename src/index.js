@@ -39,6 +39,13 @@ var LoongshipMap = function name(params) {
 }();
 
 let LS = LoongshipMap;
-if (typeof module !== "undefined" && module.exports) {
+
+if (typeof module != 'undefined' && module.exports) {  //CMD
     module.exports = LS;
+} else if (typeof define == 'function' && define.amd) {  //AMD
+    define(function() {
+        return LS;
+    });
+} else {
+    window.LS= LS;
 }
