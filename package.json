@@ -1,6 +1,6 @@
 {
   "name": "loongshipsdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -47,7 +47,7 @@
     "eslint": "^5.12.0",
     "leaflet": "^1.4.0"
   },
-  "repository": {                                                                                                                    
+  "repository": {
     "type": "git",
     "url": "git+git@github.com:jieli-fe/sdk.git"
   }
