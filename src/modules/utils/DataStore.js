@@ -53,7 +53,7 @@ class DataStore {
 }
 
 var storeObject = null;
-var datastore = function () {
+var datastore = function datastore() {
     if (!storeObject) {
         storeObject = new DataStore();
     }

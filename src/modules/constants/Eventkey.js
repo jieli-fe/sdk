@@ -5,6 +5,7 @@
 export default {
     SHIP_LIST_BOARD: "SHIP_LIST_BOARD", //创建船舶列表的触发key
     SHIP_DRAW_KEY: "SHIP_DRAW_KEY",
+    MAP_CLICK_KEY: "MAP_CLICK_KEY", //地图点击事件
     MAP_ZOOMED_KEY: "MAP_ZOOMED_KEY", //地图切换事件key
     MAP_MOVEEND_KEY: "MAP_MOVEEND_KEY", //地图移动结束
     MAP_MOUSEMOVE_KEY: "MAP_MOUSEMOVE_KEY",

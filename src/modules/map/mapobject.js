@@ -1,9 +1,3 @@
-/***
- *
- * 地图类
- * @export
- * @class Map
- */
 import L from "leaflet"
 import Constants from "../constants/Constants";
 import GlobalKey from "../constants/Globalkey";
@@ -12,10 +6,9 @@ import { datastore as dataStore } from "../utils/DataStore";
 import { Events } from "../utils/EventManageUtil";
 import { ChartLayer } from "../utils/ChartLayer";
 import { LonLatTrans } from "../utils/GpsCorrect";
-import Globalkey from "../constants/Globalkey";
-export default class MapObject {
-    constructor(containerId = "map", options) {
 
+export default class MapObject {
+    constructor(mapId = "map", options) {
         this.defaultOptions = {
             //初始地图中心点
             center: [Constants.DEFAULTY, Constants.DEFAULTX],
@@ -49,20 +42,20 @@ export default class MapObject {
 
         Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "MAPOBJECT-SELF-CHANGE", this.mapChangeEvent);
         L.Browser.touch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
-        this.initialize(containerId, options);
+        this.initialize(mapId, options);
     }
     _arrayToLatLng(arr) {
         return Array.isArray(arr) && arr.length > 1
             ? new L.latLng(arr[0], arr[1])
             : null
     }
-    initialize = (containerId, options) => {
+    initialize = (mapId, options) => {
         //转换中心点坐标
         this.options.center = this._arrayToLatLng(this.options.center)
         //设置用户的 key
         this.setKey(this.options.key);
         //初始化 map 对象
-        var map = new L.Map(containerId, this.options);
+        var map = new L.Map(mapId, this.options);
 
         //挂在到 this.map
         this.map = map
@@ -127,7 +120,7 @@ export default class MapObject {
      * @memberof MapObject
      */
     mapChangeEvent = () => {
-        var mapType = dataStore.getData(Globalkey.GLOBAL_MAP_TYPE);
+        var mapType = dataStore.getData(GlobalKey.GLOBAL_MAP_TYPE);
         console.log("当前地图类型: ", mapType)
         this.options.mapLayer.clearLayers();
         switch (mapType) {
@@ -281,13 +274,13 @@ export default class MapObject {
      */
     setMapType(maptype) {
         if (!maptype) return
-        dataStore.saveData(Globalkey.GLOBAL_MAP_TYPE, maptype);
+        dataStore.saveData(GlobalKey.GLOBAL_MAP_TYPE, maptype);
         //触发事件
         Events.fire(Eventkey.MAP_TYPE_CHANGE_KEY);
     }
 
     getMapType() {
-        return dataStore.getData(Globalkey.GLOBAL_MAP_TYPE);
+        return dataStore.getData(GlobalKey.GLOBAL_MAP_TYPE);
     }
     /**
      *
@@ -308,7 +301,6 @@ export default class MapObject {
      */
     on(event, callback) {
         if (!event || !callback) {
-            console.log("event or callback can not be null");
             return;
         }
         switch (event) {

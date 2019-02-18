@@ -7,12 +7,11 @@ import "leaflet/dist/leaflet.css"
 window.jQuery = $;
 window.$ = $;
 
-
 var LoongshipMap = function name(params) {
 
     //地图
-    function map(containerId, options) {
-        return new Map(containerId, options);
+    function map(mapId, options) {
+        return new Map(mapId, options);
     }
 
     //船舶
