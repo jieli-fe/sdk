@@ -38,3 +38,6 @@ var LoongshipMap = function name(params) {
     }
 }();
 window.LS = LoongshipMap;
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = LS;
+}

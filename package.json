@@ -49,6 +49,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+git@github.com:jieli-fe/sdk.git"
+    "url": "git@github.com:jieli-fe/sdk.git"
   }
 }
