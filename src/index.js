@@ -37,7 +37,8 @@ var LoongshipMap = function name(params) {
         trace: trace
     }
 }();
-window.LS = LoongshipMap;
+
+let LS = LoongshipMap;
 if (typeof module !== "undefined" && module.exports) {
     module.exports = LS;
 }
