@@ -2,7 +2,7 @@
   "name": "loongshipsdk",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --config webpack.dev.js",
     "build": "webpack --progress --config webpack.prod.js"
