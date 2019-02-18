@@ -38,7 +38,7 @@ var LoongshipMap = function name(params) {
     }
 }();
 
-if (typeof module != 'undefined' && module.exports) {  //CMD
+/* if (typeof module != 'undefined' && module.exports) {  //CMD
     module.exports = LoongshipMap;
 } else if (typeof define == 'function' && define.amd) {  //AMD
     define(function() {
@@ -46,4 +46,8 @@ if (typeof module != 'undefined' && module.exports) {  //CMD
     });
 } else {
     window.LS= LoongshipMap;
+} */
+
+module.exports = function(){
+    console.log(111)
 }
