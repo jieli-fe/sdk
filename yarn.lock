@@ -3907,6 +3907,20 @@ loongshipsdk@^1.0.11:
     leaflet "^1.4.0"
     qs "^6.6.0"
 
+loongshipsdk@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/loongshipsdk/-/loongshipsdk-1.0.12.tgz#98197ecf17181bb9ee451b31053d88cb7a038d67"
+  integrity sha512-2cHquuLHO1EzOYe+gRB5S+jXT9bodyG3aM1fUSmJhdfCWlN/Au+HXT2bFyPfgI7sKNlvweEF3b2oQb70bkkdQQ==
+  dependencies:
+    "@babel/plugin-proposal-decorators" "^7.2.3"
+    "@babel/polyfill" "^7.2.5"
+    "@babel/runtime" "^7.2.0"
+    axios "^0.18.0"
+    eslint "^5.12.0"
+    leaflet "^1.4.0"
+    loongshipsdk "^1.0.11"
+    qs "^6.6.0"
+
 loose-envify@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"

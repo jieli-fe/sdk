@@ -41,7 +41,7 @@ var LoongshipMap = function name(params) {
 }();
 window.LS = LoongshipMap;
 
-module.exports = LoongshipMap;
+module.exports = 1;
 // if (typeof module != 'undefined' && module.exports) {  //CMD
 //     module.exports = LoongshipMap;
 // } else if (typeof define == 'function' && define.amd) {  //AMD
