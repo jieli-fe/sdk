@@ -63,8 +63,10 @@ module.exports = {
         new CleanWebpackPlugin(["dist"]),
 
         new MiniCssExtractPlugin({
+            // filename: '[name].[chunkhash:6].css',
+            // chunkFilename: '[id].[chunkhash:6].css'
             filename: '[name].[chunkhash:6].css',
-            chunkFilename: '[id].[chunkhash:6].css'
+            chunkFilename: 'ls.css'
         }),
 
         new HtmlWebpackPlugin({

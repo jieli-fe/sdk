@@ -4,9 +4,11 @@ import ShipInfo from "./modules/ship/shipinfo";
 import Ship from './modules/ship/ship';
 import ShipTrace from './modules/ship/shiptrace';
 import "leaflet/dist/leaflet.css"
+import packageConfig from "../package.json"
 // window.jQuery = $;
 // window.$ = $;
 
+console.log(packageConfig)
 var LoongshipMap = function name(params) {
 
     //地图
@@ -31,13 +33,14 @@ var LoongshipMap = function name(params) {
     }
 
     return {
+        version: packageConfig.version,
         map: map,
         ship: ship,
         shipInfo: shipInfo,
         trace: trace
     }
 }();
-window.LS= LoongshipMap;
+window.LS = LoongshipMap;
 export default LoongshipMap
 // if (typeof module != 'undefined' && module.exports) {  //CMD
 //     module.exports = LoongshipMap;
@@ -46,6 +49,6 @@ export default LoongshipMap
 //         return LoongshipMap;
 //     });
 // } else {
-    
+
 //     window.LS= LoongshipMap;
 // }

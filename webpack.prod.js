@@ -10,8 +10,15 @@ let prod = merge(baseConfig, {
         publicPath: './'
     },
     optimization: {
-        splitChunks:{
-            chunks: "all"
+        splitChunks: {
+            chunks: "all",
+            cacheGroups: {
+                leaflet: {
+                    name: "leaflet",
+                    priority: 20,
+                    test: /[\/]node_modules[\/]leaflet[\/]/
+                }
+            }
         },
         minimizer: [
             new UglifyJsPlugin({
