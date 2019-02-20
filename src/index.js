@@ -39,6 +39,10 @@ var LoongshipMap = function name(params) {
         trace: trace
     }
 }();
+
+
+window.LS = LoongshipMap; */
+
 function npmDemo(argument) {
     var name = 'finit';
     var f1 =function f(arg){console.log(arg)}
@@ -49,8 +53,7 @@ function npmDemo(argument) {
   
   }
 
-window.LS = LoongshipMap; */
-module.exports = npmDemo();
+export default npmDemo()
 // if (typeof module != 'undefined' && module.exports) {  //CMD
 //     module.exports = LoongshipMap;
 // } else if (typeof define == 'function' && define.amd) {  //AMD
