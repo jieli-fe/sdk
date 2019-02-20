@@ -15,7 +15,11 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: '[name].js?[hash:8]'
+        filename: '[name].js?[hash:8]',
+        library: 'LS',
+        libraryExport: "default",
+        globalObject: 'this',
+        libraryTarget: 'umd'
     },
     module: {
         rules: [
