@@ -1,4 +1,4 @@
-// import $ from 'jquery';
+/* // import $ from 'jquery';
 import Map from "./modules/map/mapobject";
 import ShipInfo from "./modules/ship/shipinfo";
 import Ship from './modules/ship/ship';
@@ -49,7 +49,7 @@ function npmDemo(argument) {
   
   }
 
-window.LS = LoongshipMap;
+window.LS = LoongshipMap; */
 module.exports = npmDemo();
 // if (typeof module != 'undefined' && module.exports) {  //CMD
 //     module.exports = LoongshipMap;
