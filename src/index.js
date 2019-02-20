@@ -8,7 +8,6 @@ import packageConfig from "../package.json"
 // window.jQuery = $;
 // window.$ = $;
 
-console.log(packageConfig)
 var LoongshipMap = function name(params) {
 
     //地图
@@ -41,7 +40,8 @@ var LoongshipMap = function name(params) {
     }
 }();
 window.LS = LoongshipMap;
-export default LoongshipMap
+
+module.exports = LoongshipMap;
 // if (typeof module != 'undefined' && module.exports) {  //CMD
 //     module.exports = LoongshipMap;
 // } else if (typeof define == 'function' && define.amd) {  //AMD

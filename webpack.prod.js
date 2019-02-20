@@ -15,9 +15,14 @@ let prod = merge(baseConfig, {
             cacheGroups: {
                 leaflet: {
                     name: "leaflet",
-                    priority: 20,
+                    priority: 100,
                     test: /[\/]node_modules[\/]leaflet[\/]/
-                }
+                },
+                // index: {
+                //     minSize: 0,
+                //     name: "index",
+                //     reuseExistingChunk: true
+                // }
             }
         },
         minimizer: [

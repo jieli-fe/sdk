@@ -3894,6 +3894,19 @@ loglevel@^1.4.1:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.1.tgz#e0fc95133b6ef276cdc8887cdaf24aa6f156f8fa"
   integrity sha1-4PyVEztu8nbNyIh82vJKpvFW+Po=
 
+loongshipsdk@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/loongshipsdk/-/loongshipsdk-1.0.11.tgz#5cca19c0bb7de8fe9422e27b7c6ac68684ee66cc"
+  integrity sha512-1RKPk+SUXLfehcnSOuf3W7bnjEBkY6VXiZK1M27/XtniafqBD0K3UCwjV0DveSp0F0tKNNAHPlOqkKI5/jURaw==
+  dependencies:
+    "@babel/plugin-proposal-decorators" "^7.2.3"
+    "@babel/polyfill" "^7.2.5"
+    "@babel/runtime" "^7.2.0"
+    axios "^0.18.0"
+    eslint "^5.12.0"
+    leaflet "^1.4.0"
+    qs "^6.6.0"
+
 loose-envify@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"

@@ -10,11 +10,16 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = {
     entry: {
-        index: path.resolve(__dirname, "./src/index.js")
+        index: path.resolve(__dirname, "./src/index.js"),
+        demo: path.resolve(__dirname, "./src/demo/demo.js"),
     },
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: '[name].js?[hash:8]'
+        filename: '[name].js?[hash:8]',
+        // library: 'numberWord', // 指定类库名,主要用于直接引用的方式(比如script)
+        libraryExport: "default", // 对外暴露default属性，就可以直接调用default里的属性
+        globalObject: 'this', // 定义全局变量,兼容node和浏览器运行，避免出现"window is not defined"的情况
+        libraryTarget: 'umd' // 定义打包方式Universal Module Definition,同时支持在CommonJS、AMD和全局变量使用
     },
     module: {
         rules: [
@@ -70,9 +75,10 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            title: 'sdk',
-            template: './src/sdk.html',
-            filename: 'index.html'
+            title: 'demo',
+            template: './src/demo/index.html',
+            filename: 'index.html',
+            chunks: ["demo"]
         }),
 
     ]
