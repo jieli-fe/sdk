@@ -5,12 +5,9 @@
 import Constants from "../constants/Constants";
 import GlobalKey from "../constants/Globalkey";
 import Eventkey from "../constants/Eventkey";
-import {
-    datastore
-} from "../utils/DataStore";
-import {
-    Events
-} from "../utils/EventManageUtil";
+import { datastore } from "../utils/DataStore";
+import { Events } from "../utils/EventManageUtil";
+import http from "../utils/axios"
 export default class ShipInfo {
     constructor() {
         this.options = Object.create({
@@ -47,7 +44,24 @@ export default class ShipInfo {
         Events.fire(this.options.Loadstart_Event_Key);
 
         var _self = this;
-        $.ajax({
+        http.post(Constants.SHIP_BASEINFO_KEY, postData)
+            .then((response) => {
+                if (parseInt(response.status) === Constants.LOAD_DATA_SUCESS) {
+                    //加载后
+                    responseData = response.result;
+                    Events.fire(_self.options.Loadend_Event_Key);
+                } else {
+                    //加载失败
+                    Events.fire(_self.options.Loaderror_Event_Key);
+                    throw "Load data error ,errorcode is " + response.status;
+                }
+            })
+            .catch(()=>{
+                Events.fire(_self.options.Loaderror_Event_Key);
+                throw error;
+            })
+
+        /* $.ajax({
             type: 'POST',
             url: Constants.SHIP_BASEINFO_KEY, //船舶基本信息地址
             async: false,
@@ -69,7 +83,7 @@ export default class ShipInfo {
                 throw error;
             },
             dataType: "json"
-        });
+        }); */
         return responseData;
     }
 

@@ -1,11 +1,11 @@
-import $ from 'jquery';
+// import $ from 'jquery';
 import Map from "./modules/map/mapobject";
 import ShipInfo from "./modules/ship/shipinfo";
 import Ship from './modules/ship/ship';
 import ShipTrace from './modules/ship/shiptrace';
 import "leaflet/dist/leaflet.css"
-window.jQuery = $;
-window.$ = $;
+// window.jQuery = $;
+// window.$ = $;
 
 var LoongshipMap = function name(params) {
 
@@ -37,18 +37,15 @@ var LoongshipMap = function name(params) {
         trace: trace
     }
 }();
-
-/* if (typeof module != 'undefined' && module.exports) {  //CMD
-    module.exports = LoongshipMap;
-} else if (typeof define == 'function' && define.amd) {  //AMD
-    define(function() {
-        return LoongshipMap;
-    });
-} else {
-    window.LS= LoongshipMap;
-} */
-
-module.exports = function(){
-    console.log(111)
-    return "111"
-}
+window.LS= LoongshipMap;
+export default LoongshipMap
+// if (typeof module != 'undefined' && module.exports) {  //CMD
+//     module.exports = LoongshipMap;
+// } else if (typeof define == 'function' && define.amd) {  //AMD
+//     define(function() {
+//         return LoongshipMap;
+//     });
+// } else {
+    
+//     window.LS= LoongshipMap;
+// }

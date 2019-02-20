@@ -4,24 +4,15 @@
 import Constants from "../constants/Constants";
 import GlobalKey from "../constants/Globalkey";
 import Eventkey from "../constants/Eventkey";
-import {
-    datastore
-} from "../utils/DataStore";
-import {
-    Events
-} from "../utils/EventManageUtil";
-import {
-    LonLatTrans,
-} from "../utils/GpsCorrect";
-import {
-    shipStatu,
-    getRuningIcon,
-    getStopIcon
-} from "./ShipUtils";
-require("../utils/rotatedmarker");
+import { datastore } from "../utils/DataStore";
+import { Events } from "../utils/EventManageUtil";
+import { LonLatTrans, } from "../utils/GpsCorrect";
+import { shipStatu, getRuningIcon, getStopIcon } from "./ShipUtils";
 import testmarker from "../../images/end.png";
+import http from "../utils/axios"
+require("../utils/rotatedmarker");
 export default class Ship {
-    constructor(shipid, customoptions) {
+    constructor(shipId, options) {
         this.options = Object.create({
             mapview: datastore.getData(GlobalKey.MAPOBJECT),
             shipmarker: ""
@@ -30,7 +21,7 @@ export default class Ship {
             Loaderror_Event_Type: "loaderror",
             Loadstart_Event_Type: "loadstart",
             Loadend_Event_Type: "loadend",
-            Click_Event_Type: ("click" + shipid),
+            Click_Event_Type: ("click" + shipId),
             Loaderror_Event_Key: "Loaderror_Event_Key",
             Loadstart_Event_Key: "Loadstart_Event_Key",
             Loadend_Event_Key: "Loadend_Event_Key",
@@ -38,10 +29,10 @@ export default class Ship {
         });
         this.markerClick = this.markerClick.bind(this);
         //地图切换事件
-        // Events.addEvent(this.events.Click_Event_Key, shipid, this.markerClick);
-        Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "ship-marker-change" + shipid, this.mapchange);
+        // Events.addEvent(this.events.Click_Event_Key, shipId, this.markerClick);
+        Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "ship-marker-change" + shipId, this.mapchange);
         //地图切换事件
-        this.initShip(shipid, customoptions);
+        this.initShip(shipId, options);
     }
 
     /**
@@ -49,21 +40,40 @@ export default class Ship {
      * 获取船舶数据
      * @memberof Ship
      */
-    initShip(shipid, customoptions) {
-        var datakey = datastore.getData(GlobalKey.GLOBAL_DATA_KEY) || Constants.DATA_API_TEST_KEY;
-        if (!datakey) {
+    initShip(shipId, options) {
+        var key = datastore.getData(GlobalKey.GLOBAL_DATA_KEY) || Constants.DATA_API_TEST_KEY;
+        if (!key) {
             throw "Api key can not be null";
         }
-        if (!shipid) {
-            throw "shipid can not be null";
+        if (!shipId) {
+            throw "shipId can not be null";
         }
         let postData = {
-            shipid: shipid,
-            key: datakey
+            shipid: shipId,
+            key
         }
         var _self = this;
         Events.fire(this.events.Loadstart_Event_Key);
-        $.ajax({
+
+        http.post(Constants.SHIP_POSITION_INFO_KEY,postData)
+        .then((response)=>{    
+            if (parseInt(response.status) === Constants.LOAD_DATA_SUCESS) {
+                //加载后
+                let responseData = response.result;
+                _self.drawShip(responseData[0], options);
+                Events.fire(_self.events.Loadend_Event_Key);
+            } else {
+                //加载失败
+                Events.fire(_self.events.Loaderror_Event_Key);
+                throw "Load data error ,errorcode is " + response.status;
+            }
+
+        })
+        .catch(()=>{
+            Events.fire(_self.events.Loaderror_Event_Key);
+            throw error;
+        })
+        /* $.ajax({
             type: 'POST',
             url: Constants.SHIP_POSITION_INFO_KEY, //船舶基本信息地址
             data: postData,
@@ -71,7 +81,7 @@ export default class Ship {
                 if (parseInt(response.status) === Constants.LOAD_DATA_SUCESS) {
                     //加载后
                     let responseData = response.result;
-                    _self.drawShip(responseData[0], customoptions);
+                    _self.drawShip(responseData[0], options);
                     Events.fire(_self.events.Loadend_Event_Key);
                 } else {
                     //加载失败
@@ -84,7 +94,7 @@ export default class Ship {
                 throw error;
             },
             dataType: "json"
-        });
+        }); */
     }
     /**
      *
@@ -263,7 +273,7 @@ export default class Ship {
                 permanent: true,
                 className: "leaflet-label-ship",
                 direction: "top",
-                offset:[0,-10]
+                offset: [0, -10]
             });
             shipmarker.openTooltip(shipmarker.getLatLng());
         }

@@ -239,6 +239,8 @@ export default class MapObject {
             this.setZoom(options.zoom);
         }
 
+        return this
+
     }
     /**
      *
@@ -246,8 +248,10 @@ export default class MapObject {
      * @memberof MapObject
      */
     setCenter(lat, lng) {
+        let mapview = this.map;
         let lonlat = LonLatTrans(lat, lng);
         this.map.setView(lonlat, mapview.getZoom());
+        return this
     }
     getCenter() {
         return this.map.getCenter();
@@ -260,6 +264,7 @@ export default class MapObject {
      */
     setZoom(zoomNumber) {
         this.map.setZoom(zoomNumber);
+        return this
     }
     //获取当前地图层级
     getZoom() {
@@ -277,6 +282,7 @@ export default class MapObject {
         dataStore.saveData(GlobalKey.GLOBAL_MAP_TYPE, maptype);
         //触发事件
         Events.fire(Eventkey.MAP_TYPE_CHANGE_KEY);
+        return this
     }
 
     getMapType() {
@@ -290,6 +296,7 @@ export default class MapObject {
      */
     setKey(datakey) {
         datakey && dataStore.saveData(GlobalKey.GLOBAL_DATA_KEY, datakey);
+        return this
     }
 
     /**

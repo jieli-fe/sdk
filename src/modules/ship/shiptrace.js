@@ -1,36 +1,15 @@
 import Constants from "../constants/Constants";
 import GlobalKey from "../constants/Globalkey";
 import Eventkey from "../constants/Eventkey";
-import {
-    Events
-} from "../utils/EventManageUtil";
-import {
-    datastore
-} from "../utils/DataStore";
-import {
-    getShipData,
-    dealShipData,
-    getStartStopIcon,
-    getShipFiledValue,
-    filterNowVoyageData
-} from "./ShipUtils";
-import {
-    ShipPointUtil
-} from "./VoyagePointUtil";
-import {
-    LonLatTrans
-} from "../utils/GpsCorrect";
-import {
-    LongToStr2,
-    TwoDateSub
-} from "../utils/DateUtils";
-import {
-    getPlanStart,
-    getPlanStop
-} from "./ShipCommon";
-import {
-    tooltipNotCon
-} from "../utils/CollisionUtil";
+import { Events } from "../utils/EventManageUtil";
+import { datastore } from "../utils/DataStore";
+import { getShipData, dealShipData, getStartStopIcon, getShipFiledValue, filterNowVoyageData } from "./ShipUtils";
+import { ShipPointUtil } from "./VoyagePointUtil";
+import { LonLatTrans } from "../utils/GpsCorrect";
+import { LongToStr2, TwoDateSub } from "../utils/DateUtils";
+import { getPlanStart, getPlanStop } from "./ShipCommon";
+import { tooltipNotCon } from "../utils/CollisionUtil";
+import http from "../utils/axios"
 /** 
  * 船舶轨迹展示
  * * */
@@ -69,7 +48,24 @@ export default class ShipTrace {
             endUtcTime: endtime
         }
         let _self = this;
-        $.ajax({
+        http.post(Constants.SHIP_TRACE_INFO_KEY, postData)
+            .then((response) => {
+                if (parseInt(response.status) === Constants.LOAD_DATA_SUCESS) {
+                    //加载后
+                    _self.drawController(response, shipid, options);
+                    // Events.fire(_self.options.Loadend_Event_Key);
+                } else {
+                    //加载失败
+                    // Events.fire(_self.options.Loaderror_Event_Key);
+                    throw "Load data error,errorcode is " + response.status;
+
+                }
+            })
+            .catch((error)=>{
+                throw error;
+            })
+
+        /* $.ajax({
             type: 'POST',
             url: Constants.SHIP_TRACE_INFO_KEY, //船舶基本信息地址
             async: false,
@@ -91,7 +87,7 @@ export default class ShipTrace {
                 throw error;
             },
             dataType: "json"
-        });
+        }); */
     }
 
     drawController(data, shipid, options) {
