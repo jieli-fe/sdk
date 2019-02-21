@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --config webpack.dev.js",
     "build": "webpack --progress --config webpack.prod.js",
+    "build1": "webpack --progress --config webpack.dev.js",
     "push": "npm version patch && npm publish"
   },
   "author": "",
