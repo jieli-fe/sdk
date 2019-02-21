@@ -29,7 +29,9 @@ function LoongshipMap(params) {
     }
 
     return {
-        baseTime: 1,
+        baseTime: {
+            version: 1
+        },
         version: version,
         map: map,
         ship: ship,
