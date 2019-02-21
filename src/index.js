@@ -30,7 +30,7 @@ function LoongshipMap(params) {
 
     return {
         baseTime: {
-            version: 1
+            version: 2
         },
         version: version,
         map: map,
