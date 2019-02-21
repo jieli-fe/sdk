@@ -15,13 +15,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: '[name].js?[hash:8]',
-        // library: 'LS',
-        // libraryExport: "default",
-        // globalObject: 'this',
-        // libraryTarget: 'umd'
-        library: 'LS',
-        libraryTarget: 'commonjs2'
+        filename: '[name].js?[hash:8]'
     },
     module: {
         rules: [

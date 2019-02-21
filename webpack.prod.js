@@ -7,7 +7,11 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 let prod = merge(baseConfig, {
     mode: "production",
     output: {
-        publicPath: './'
+        publicPath: './',
+        path: path.resolve(__dirname, "dist"),
+        filename: '[name].js?[hash:8]',
+        library: 'LS',
+        libraryTarget: 'commonjs2'
     },
     optimization: {
         splitChunks: {

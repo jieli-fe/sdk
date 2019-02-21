@@ -1,2 +1,2 @@
-import LS from "loongshipsdk"
-console.log(LS)
+import LS from "../index"
+window.LS = LS
