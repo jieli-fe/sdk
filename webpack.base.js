@@ -61,7 +61,7 @@ module.exports = {
 
         // new webpack.HotModuleReplacementPlugin(),
 
-        new CleanWebpackPlugin(["lib"]),
+        new CleanWebpackPlugin(["dist"]),
 
         new MiniCssExtractPlugin({
             // filename: '[name].[chunkhash:6].css',

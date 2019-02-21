@@ -3,7 +3,7 @@ const baseConfig = require("./webpack.base.js");
 const merge = require("webpack-merge")
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 let prod = merge(baseConfig, {
     mode: "production",
     output: {
@@ -38,6 +38,9 @@ let prod = merge(baseConfig, {
             new OptimizeCSSAssetsPlugin({})
         ]
     }, */
+    plugins: [
+        new CleanWebpackPlugin(["lib"]),
+    ],
     devtool: "none"
 });
 console.log("打包到相对路径：" + prod.output.publicPath)
