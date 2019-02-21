@@ -8,12 +8,12 @@ let prod = merge(baseConfig, {
     mode: "production",
     output: {
         publicPath: './',
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "lib"),
         filename: '[name].js?[hash:8]',
         library: 'LS',
-        libraryTarget: 'commonjs2'
+        libraryTarget: 'umd'
     },
-    optimization: {
+    /* optimization: {
         splitChunks: {
             chunks: "all",
             cacheGroups: {
@@ -37,7 +37,7 @@ let prod = merge(baseConfig, {
             }),
             new OptimizeCSSAssetsPlugin({})
         ]
-    },
+    }, */
     devtool: "none"
 });
 console.log("打包到相对路径：" + prod.output.publicPath)

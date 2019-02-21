@@ -1,4 +1,4 @@
-import Map from "./modules/map/mapobject";
+/* import Map from "./modules/map/mapobject";
 import ShipInfo from "./modules/ship/shipinfo";
 import Ship from './modules/ship/ship';
 import ShipTrace from './modules/ship/shiptrace';
@@ -35,6 +35,11 @@ function LoongshipMap(params) {
         shipInfo: shipInfo,
         trace: trace
     }
-};
+}; */
 // window.LS = LoongshipMap;
-export default LoongshipMap()
+// export default LoongshipMap()
+
+export default {
+    version: 11,
+    a: 1
+}

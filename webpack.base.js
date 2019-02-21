@@ -59,7 +59,7 @@ module.exports = {
     plugins: [
         // new BundleAnalyzerPlugin(),
 
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
 
         new CleanWebpackPlugin(["dist"]),
 

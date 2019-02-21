@@ -2,11 +2,10 @@
   "name": "loongshipsdk",
   "version": "1.0.36",
   "description": "",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --config webpack.dev.js",
-    "build": "webpack --progress --config webpack.prod.js",
-    "build1": "webpack --progress --config webpack.dev.js"
+    "build": "webpack --progress --config webpack.prod.js"
   },
   "author": "",
   "license": "ISC",
