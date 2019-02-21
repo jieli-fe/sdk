@@ -61,13 +61,12 @@ module.exports = {
 
         // new webpack.HotModuleReplacementPlugin(),
 
-        new CleanWebpackPlugin(["dist"]),
+        new CleanWebpackPlugin(["lib"]),
 
         new MiniCssExtractPlugin({
             // filename: '[name].[chunkhash:6].css',
             // chunkFilename: '[id].[chunkhash:6].css'
-            filename: '[name].[chunkhash:6].css',
-            chunkFilename: 'ls.css'
+            filename: 'ls.css'
         }),
 
         new HtmlWebpackPlugin({

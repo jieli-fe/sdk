@@ -5,5 +5,5 @@
 // // var a = require("../../dist2/index.js")
 // console.log(test)
 
-import test from "../../dist2/index.js"
-console.log(test)
+// import test from "../../dist2/index.js"
+// console.log(test)
