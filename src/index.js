@@ -1,4 +1,4 @@
-/* // import $ from 'jquery';
+// import $ from 'jquery';
 import Map from "./modules/map/mapobject";
 import ShipInfo from "./modules/ship/shipinfo";
 import Ship from './modules/ship/ship';
@@ -39,28 +39,5 @@ var LoongshipMap = function name(params) {
         trace: trace
     }
 }();
-
-
-window.LS = LoongshipMap; */
-
-function npmDemo(argument) {
-    var name = 'finit';
-    var f1 =function f(arg){console.log(arg)}
-    return {
-      name:name,
-      f1:f1
-    }
-  
-  }
-
-export default npmDemo()
-// if (typeof module != 'undefined' && module.exports) {  //CMD
-//     module.exports = LoongshipMap;
-// } else if (typeof define == 'function' && define.amd) {  //AMD
-//     define(function() {
-//         return LoongshipMap;
-//     });
-// } else {
-
-//     window.LS= LoongshipMap;
-// }
+window.LS = LoongshipMap;
+export default LoongshipMap
