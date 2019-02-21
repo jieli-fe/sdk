@@ -1,14 +1,11 @@
-// import $ from 'jquery';
 import Map from "./modules/map/mapobject";
 import ShipInfo from "./modules/ship/shipinfo";
 import Ship from './modules/ship/ship';
 import ShipTrace from './modules/ship/shiptrace';
 import "leaflet/dist/leaflet.css"
 import packageConfig from "../package.json"
-// window.jQuery = $;
-// window.$ = $;
 
-var LoongshipMap = function name(params) {
+function LoongshipMap(params) {
 
     //地图
     function map(mapId, options) {
@@ -38,6 +35,6 @@ var LoongshipMap = function name(params) {
         shipInfo: shipInfo,
         trace: trace
     }
-}();
-window.LS = LoongshipMap;
-export default LoongshipMap
+};
+// window.LS = LoongshipMap;
+export default LoongshipMap()
