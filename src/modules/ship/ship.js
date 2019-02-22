@@ -17,7 +17,7 @@ export default class Ship {
             mapview: datastore.getData(GlobalKey.MAPOBJECT),
             shipmarker: ""
         }
-        this.options = Object.assign(this.defaultOptions,options)
+        this.options = Object.assign(this.defaultOptions, options)
         this.events = Object.create({
             Loaderror_Event_Type: "loaderror",
             Loadstart_Event_Type: "loadstart",
@@ -43,9 +43,7 @@ export default class Ship {
      */
     initShip(shipId, options) {
         var key = datastore.getData(GlobalKey.GLOBAL_DATA_KEY) || Constants.DATA_API_TEST_KEY;
-        if (!key) {
-            throw "Api key can not be null";
-        }
+
         if (!shipId) {
             throw "shipId can not be null";
         }
@@ -56,24 +54,24 @@ export default class Ship {
         var _self = this;
         Events.fire(this.events.Loadstart_Event_Key);
 
-        http.post(Constants.SHIP_POSITION_INFO_KEY,postData)
-        .then((response)=>{    
-            if (parseInt(response.status) === Constants.LOAD_DATA_SUCESS) {
-                //加载后
-                let responseData = response.result;
-                _self.drawShip(responseData[0], options);
-                Events.fire(_self.events.Loadend_Event_Key);
-            } else {
-                //加载失败
-                Events.fire(_self.events.Loaderror_Event_Key);
-                throw "Load data error ,errorcode is " + response.status;
-            }
+        http.post(Constants.SHIP_POSITION_INFO_KEY, postData)
+            .then((response) => {
+                if (parseInt(response.status) === Constants.LOAD_DATA_SUCESS) {
+                    //加载后
+                    let responseData = response.result;
+                    _self.drawShip(responseData[0], options);
+                    Events.fire(_self.events.Loadend_Event_Key);
+                } else {
+                    //加载失败
+                    Events.fire(_self.events.Loaderror_Event_Key);
+                    throw "Load data error ,errorcode is " + response.status;
+                }
 
-        })
-        .catch(()=>{
-            Events.fire(_self.events.Loaderror_Event_Key);
-            throw error;
-        })
+            })
+            .catch(() => {
+                Events.fire(_self.events.Loaderror_Event_Key);
+                throw error;
+            })
         /* $.ajax({
             type: 'POST',
             url: Constants.SHIP_POSITION_INFO_KEY, //船舶基本信息地址
@@ -143,8 +141,6 @@ export default class Ship {
 
         this.options.mapview.addLayer(Lmarker);
         this.options.mapview.setView(latlon, this.options.mapview.getZoom());
-        //        
-
     }
 
     /**
@@ -162,7 +158,7 @@ export default class Ship {
      * 地图切换时候
      * @memberof Ship
      */
-    mapchange() {
+    mapchange = () => {
         if (this.options.shipmarker) {
             var shipmarker = this.options.shipmarker;
             let mapobject = this.options.mapview;

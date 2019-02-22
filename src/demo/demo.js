@@ -8,19 +8,19 @@ import "./app.styl"
 
 var map = LS.map("map", {
     center: [31, 122],
-    zoom: 1,
+    zoom: 6,
     mapType: 'map', //'map'/'sat'/'chart'
     key: '48755a5ab4064e7a91b60ddecc3d8c11',
 });
 
 window.map = map
 
+var shipObject = LS.ship(412001);
 
 function displayControlLayer() {
     var layerIndex = 0;
     var layers = document.querySelectorAll(".layer_map");
     return function (index) {
-        console.log(index)
         layers.forEach((item, i) => {
             if (i === index) {
                 item.classList = "layer_map show "
@@ -39,7 +39,6 @@ function getAttr(target, att) {
 
 var layerContorl = document.getElementById('tabs');
 layerContorl.querySelectorAll('button').forEach((item, index) => {
-    console.log(item)
     item.onclick = function () {
         layerContorlfn(index)
     }

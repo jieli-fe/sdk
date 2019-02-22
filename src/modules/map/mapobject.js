@@ -37,7 +37,9 @@ export default class MapObject {
             mapobject: "", //地图对象
             mapLayer: L.layerGroup([])  //图层
         }
-
+        if (options.key.length < 18) {
+            throw new Error ("Please enter the correct key")
+        }
         this.options = Object.assign(this.defaultOptions, options)
 
         Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "MAPOBJECT-SELF-CHANGE", this.mapChangeEvent);
@@ -173,7 +175,7 @@ export default class MapObject {
             id: 'sate',
             zIndex: 10
         });
-        L.Util.setOptions(this.options.mapobject, {
+        L.Util.setOptions(this.map, {
             crs: L.CRS.EPSG3857
         });
         this.options.mapLayer.addLayer(imgLayer);
@@ -216,7 +218,7 @@ export default class MapObject {
         }
 
         let zoomable = true;
-        
+
         //是否可缩放
         if (options && options.zoomable === false) {
             zoomable = false;
@@ -308,6 +310,7 @@ export default class MapObject {
      */
     on(event, callback) {
         if (!event || !callback) {
+            console.log("event or callback can not be null");
             return;
         }
         switch (event) {

@@ -7,6 +7,8 @@ class EventManage {
         //数组结构为 key,List<Object>类型
         this.eventmap = new Map();
     }
+
+    
     /**
      * [andEvent 添加事件]
      * @param  {[type]} key          [事件名称]
@@ -15,7 +17,7 @@ class EventManage {
      * @param  {[type]} paramobject  [注册事件时候参数，类型为对象]
      * @return {[type]}              [成功true，错误false]
      */
-    addEvent(key, keymark, functionname, paramobject) {
+    addEvent(key, keymark, functionname, paramobject = {}) {
         try {
             if (!this.eventmap.get(key)) {
                 var dataList = [];
@@ -93,7 +95,7 @@ class EventManage {
             }
             return true;
         } catch (e) {
-            return false; 
+            return false;
         }
     }
 }
