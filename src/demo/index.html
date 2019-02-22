@@ -9,16 +9,66 @@
 </head>
 
 <body>
-    <div id="LSmap" style="height:400px;width:400px;"></div>
+    <div id="control">
+        <div id="tabs">
+            <button id="c_map">地图控制</button>
+            <button id="c_ship">船舶控制</button>
+            <button id="c_trace">轨迹控制</button>
+            <button id="c_weather">天气控制</button>
+        </div>
+        <div class="layer_map">
+            <div class="title">地图类操作</div>
+            <div class="layer_contol">
+                <input type="text" id="mapcenter" value="12,33">
+                <button class="action" data-type="map" data-fn="setCenter" data-inputId="mapcenter">设置地图中心</button>
+                <button class="action" data-type="map" data-fn="getCenter">获取地图中心</button>
+                <br>
+                <input type="text" id="mapzoom" value="10">
+                <button class="action" data-type="map" data-fn="setZoom" data-inputId="mapzoom">设置地图层级</button>
+                <button class="action" data-type="map" data-fn="getZoom">获取地图层级</button>
+
+                <br>
+                <label><input name="maptype" type="radio" value="map" checked />路地图</label> 
+                <label><input name="maptype" type="radio" value="sat" />海图</label> 
+                <label><input name="maptype" type="radio" value="chart" />卫星图</label> 
+                <button class="action" data-type="map" data-fn="setMapType" data-radioname="maptype">设置地图层级</button>
+                <button class="action" data-type="map" data-fn="getMapType">获取地图层级</button>
+            </div>
+        </div>
+
+        <div class="layer_map">
+            <div class="title">船舶类操作</div>
+            <div class="layer_contol">
+                <button>设置</button>
+            </div>
+        </div>
+
+        <div class="layer_map">
+            <div class="title">轨迹控制</div>
+            <div class="layer_contol">
+                <button>设置</button>
+            </div>
+        </div>
+
+        <div class="layer_map">
+            <div class="title">天气控制</div>
+            <div class="layer_contol">
+                <button>设置</button>
+            </div>
+        </div>
+    </div>
+    <div class="map">
+        <div id="map"></div>
+    </div>
 </body>
 <script>
-    var t = LS.map("LSmap", {
-        center: [31, 122],
-        zoom: 1,
-        mapType: 'map', //'map'/'sat'/'chart'
-        key: '48755a5ab4064e7a91b60ddecc3d8c11',
-    });
-    
+    // var map = LS.map("map", {
+    //     center: [31, 122],
+    //     zoom: 1,
+    //     mapType: 'map', //'map'/'sat'/'chart'
+    //     key: '48755a5ab4064e7a91b60ddecc3d8c11',
+    // });
+
     //shipid=413472680&key=5cdd7336161c4ce2  a27a21d770b8aa53 & startUtcTime=1512108577 & endUtcTime=1512972577
     // 
     // var shipObject = LS.ship(477067800);
@@ -28,7 +78,6 @@
     //     shipObject.setImg();
     //     // Ls.trace(636015511, 1544508577, 1545372577);
     // }, 1500);
-   
 </script>
 
 </html>

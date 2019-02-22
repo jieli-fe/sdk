@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --config webpack.dev.js",
-    "build": "webpack --progress --config webpack.prod.js && rm lib/demo.js && rm lib/index.html"
+    "build": "webpack --progress --config webpack.prod.js && rm lib/demo.js && rm lib/index.html",
+    "update": "npm version patch && git push && npm publish"
   },
   "author": "",
   "license": "ISC",

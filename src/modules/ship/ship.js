@@ -13,10 +13,11 @@ import http from "../utils/axios"
 require("../utils/rotatedmarker");
 export default class Ship {
     constructor(shipId, options) {
-        this.options = Object.create({
+        this.defaultOptions = {
             mapview: datastore.getData(GlobalKey.MAPOBJECT),
             shipmarker: ""
-        });
+        }
+        this.options = Object.assign(this.defaultOptions,options)
         this.events = Object.create({
             Loaderror_Event_Type: "loaderror",
             Loadstart_Event_Type: "loadstart",

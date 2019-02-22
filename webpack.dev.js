@@ -8,7 +8,7 @@ module.exports = merge(baseConfig,{
     devServer: {
         contentBase: path.resolve(__dirname, "dist"),
         port: 9000,
-        hot: true,
+        // hot: true,
         compress: true,
         open: true,
         historyApiFallback: true
