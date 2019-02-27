@@ -30,7 +30,7 @@ function LoongshipMap(params) {
     }
 
     return {
-        updateTag: 1,
+        updateTag: '1.0.1',
         L: L,
         version: version,
         map: map,
