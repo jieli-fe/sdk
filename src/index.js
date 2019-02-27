@@ -3,8 +3,9 @@ import ShipInfo from "./modules/ship/shipinfo";
 import Ship from './modules/ship/ship';
 import ShipTrace from './modules/ship/shiptrace';
 import "leaflet/dist/leaflet.css"
-import {version} from "../package.json"
-
+import { version } from "../package.json"
+import "./stylus/index.styl"
+import L from "leaflet"
 function LoongshipMap(params) {
 
     //地图
@@ -30,6 +31,7 @@ function LoongshipMap(params) {
 
     return {
         updateTag: 1,
+        L: L,
         version: version,
         map: map,
         ship: ship,

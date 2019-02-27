@@ -8,9 +8,8 @@ import { datastore } from "../utils/DataStore";
 import { Events } from "../utils/EventManageUtil";
 import { LonLatTrans, } from "../utils/GpsCorrect";
 import { shipStatu, getRuningIcon, getStopIcon } from "./ShipUtils";
-import testmarker from "../../images/end.png";
 import http from "../utils/axios"
-require("../utils/rotatedmarker");
+// require("../utils/rotatedmarker");
 export default class Ship {
     constructor(shipId, options) {
         this.defaultOptions = {
@@ -31,7 +30,9 @@ export default class Ship {
         this.markerClick = this.markerClick.bind(this);
         //地图切换事件
         // Events.addEvent(this.events.Click_Event_Key, shipId, this.markerClick);
-        Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "ship-marker-change" + shipId, this.mapchange);
+
+        // Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "ship-marker-change" + shipId, this.mapchange);
+
         //地图切换事件
         this.initShip(shipId, options);
     }

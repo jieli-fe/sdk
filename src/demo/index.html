@@ -28,9 +28,9 @@
                 <button class="action" data-type="map" data-fn="getZoom">获取地图层级</button>
 
                 <br>
-                <label><input name="maptype" type="radio" value="map" checked />路地图</label> 
-                <label><input name="maptype" type="radio" value="sat" />海图</label> 
-                <label><input name="maptype" type="radio" value="chart" />卫星图</label> 
+                <label><input name="maptype" type="radio" value="map" checked />路地图</label>
+                <label><input name="maptype" type="radio" value="sat" />海图</label>
+                <label><input name="maptype" type="radio" value="chart" />卫星图</label>
                 <button class="action" data-type="map" data-fn="setMapType" data-radioname="maptype">设置地图层级</button>
                 <button class="action" data-type="map" data-fn="getMapType">获取地图层级</button>
             </div>
@@ -39,7 +39,11 @@
         <div class="layer_map">
             <div class="title">船舶类操作</div>
             <div class="layer_contol">
-                <button>设置</button>
+
+                <input type="text" id="shipMMSI" value="477139100">
+                <button class="action" data-type="ship" data-fn="addShip" data-inputId="shipMMSI">添加船舶</button>
+                <button class="action" data-type="ship" data-fn="showTrace" data-inputId="shipMMSI">添加船舶</button>
+                
             </div>
         </div>
 

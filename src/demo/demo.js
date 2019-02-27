@@ -12,10 +12,61 @@ var map = LS.map("map", {
     mapType: 'map', //'map'/'sat'/'chart'
     key: '48755a5ab4064e7a91b60ddecc3d8c11',
 });
-
 window.map = map
 
-var shipObject = LS.ship(412001);
+
+/**
+ * polygon
+ */
+
+console.log(map.polygon)
+var latlng = [[31, 122],[33, 125]]
+map.polygon(latlng).bindPopup("I am a polygon.")
+
+/**
+ * polyline
+ */
+var polyline = [
+    [31, 122],
+    [33, 133],
+    [25, 144]
+]
+var aa = map.polyline(polyline).bindPopup("i am a polyline.")
+
+
+/**
+ * circleMarker
+ * 
+ */
+
+map.circleMarker([29, 121],{
+    color: "red",
+    radius: 1
+}).bindPopup("123").openPopup();
+
+
+/**
+ *  marker
+ * 
+*/
+var myIcon = map.icon({
+    iconUrl: 'https://cdn.icon-icons.com/icons2/259/PNG/128/ic_location_on_128_28437.png',
+    iconSize: [128, 128],
+    iconAnchor:  [64, 118],
+    popupAnchor: [0, -100],
+});
+
+// var myIcon = map.icon({
+//     iconUrl: 'https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png',
+//     iconSize: [25,41],
+//     iconAnchor:  [12, 41],
+//     popupAnchor: [1, -34],
+// });
+map.marker([29, 121],{
+    icon : myIcon,
+    title: "ttttttt"
+}).bindPopup("marker").openPopup();
+
 
 function displayControlLayer() {
     var layerIndex = 0;
@@ -32,7 +83,7 @@ function displayControlLayer() {
     }
 }
 var layerContorlfn = displayControlLayer()
-layerContorlfn(0)
+layerContorlfn(1)
 function getAttr(target, att) {
     return target.getAttribute(att) ? target.getAttribute(att) : null
 }
@@ -130,6 +181,17 @@ var lsActions = {
         }
         alert("当前地图类型为: " + str)
     },
+    addShip: function (shipId) {
+        if(!isNaN(shipId)){
+            LS.ship(shipId);
+        }else{
+            throw new Error('请输入船舶的 mmis')
+        }
+     },
+    showTrace: function (shipId, startTime, endTime, options) {
+        LS.trace(shipId, startTime, endTime, options);
+    },
+    dd: function () { },
     dd: function () { },
     dd: function () { }
 }

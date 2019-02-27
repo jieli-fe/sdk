@@ -14,17 +14,21 @@ import http from "../utils/axios"
  * 船舶轨迹展示
  * * */
 export default class ShipTrace {
-    constructor(shipid, starttime, endtime, options) {
-        this.options = Object.create({
+    constructor(shipId, startTime, endTime, options) {
+        this.defaultOptions = {
             mapview: datastore.getData(GlobalKey.MAPOBJECT),
-            LineObject: new Object(),
-            traceoption: new Object()
-        });
+            LineObject: {},
+            traceoption: {}
+        }
+        this.options = Object.assign(this.defaultOptions, options)
+
         this.mapZoomEndEvent = this.mapZoomEndEvent.bind(this);
         this.mapChange = this.mapChange.bind(this);
-        Events.addEvent(Eventkey.MAP_ZOOMED_KEY, "VOYAGE-ZOOM-END-KEY" + shipid, this.mapZoomEndEvent);
-        Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "ship-trace" + shipid, this.mapChange);
-        this.getTraceData(shipid, starttime, endtime, options);
+
+        Events.addEvent(Eventkey.MAP_ZOOMED_KEY, "VOYAGE-ZOOM-END-KEY" + shipId, this.mapZoomEndEvent);
+        Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "ship-trace" + shipId, this.mapChange);
+        
+        this.getTraceData(shipId, startTime, endTime, options);
     }
 
 
@@ -32,27 +36,27 @@ export default class ShipTrace {
      *
      * 获取轨迹数据
      * @param {*} ship
-     * @param {*} starttime
-     * @param {*} endtime
+     * @param {*} startTime
+     * @param {*} endTime
      * @param {*} options
      * @memberof ShipTrace
      */
-    getTraceData(shipid, starttime, endtime, options) {
-        //shipid=413472680&key=5cdd7336161c4ce2
+    getTraceData(shipId, startTime, endTime, options) {
+        //shipId=413472680&key=5cdd7336161c4ce2
         //a27a21d770b8aa53 & startUtcTime = 1512108577 & endUtcTime = 1512972577
-        var datakey = datastore.getData(GlobalKey.GLOBAL_DATA_KEY) || Constants.DATA_API_TEST_KEY;
+        var key = datastore.getData(GlobalKey.GLOBAL_DATA_KEY) || Constants.DATA_API_TEST_KEY;
         var postData = {
-            key: datakey,
-            shipid: shipid,
-            startUtcTime: starttime,
-            endUtcTime: endtime
+            key,
+            shipid: shipId,
+            startUtcTime: startTime,
+            endUtcTime: endTime
         }
         let _self = this;
         http.post(Constants.SHIP_TRACE_INFO_KEY, postData)
             .then((response) => {
                 if (parseInt(response.status) === Constants.LOAD_DATA_SUCESS) {
                     //加载后
-                    _self.drawController(response, shipid, options);
+                    _self.drawController(response, shipId, options);
                     // Events.fire(_self.options.Loadend_Event_Key);
                 } else {
                     //加载失败
@@ -61,7 +65,7 @@ export default class ShipTrace {
 
                 }
             })
-            .catch((error)=>{
+            .catch((error) => {
                 throw error;
             })
 
@@ -73,7 +77,7 @@ export default class ShipTrace {
             success: function (response) {
                 if (parseInt(response.status) === Constants.LOAD_DATA_SUCESS) {
                     //加载后
-                    _self.drawController(response, shipid, options);
+                    _self.drawController(response, shipId, options);
                     // Events.fire(_self.options.Loadend_Event_Key);
                 } else {
                     //加载失败

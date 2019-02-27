@@ -6,7 +6,9 @@ import { datastore as dataStore } from "../utils/DataStore";
 import { Events } from "../utils/EventManageUtil";
 import { ChartLayer } from "../utils/ChartLayer";
 import { LonLatTrans } from "../utils/GpsCorrect";
-
+import "./distance"
+import "../utils/tools"
+// import {Polyline} from "./point"
 export default class MapObject {
     constructor(mapId = "map", options) {
         this.defaultOptions = {
@@ -33,18 +35,21 @@ export default class MapObject {
             zoomable: true,
             //用户 key
             key: '',
+            //工具箱
+            toolBox: true,
             mapType: "map", //'map'/'sat'/'chart'
             mapobject: "", //地图对象
             mapLayer: L.layerGroup([])  //图层
         }
         if (options.key.length < 18) {
-            throw new Error ("Please enter the correct key")
+            throw new Error("Please enter the correct key")
         }
         this.options = Object.assign(this.defaultOptions, options)
 
         Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "MAPOBJECT-SELF-CHANGE", this.mapChangeEvent);
         L.Browser.touch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
         this.initialize(mapId, options);
+
     }
     _arrayToLatLng(arr) {
         return Array.isArray(arr) && arr.length > 1
@@ -80,8 +85,32 @@ export default class MapObject {
 
         //全局地图对象
         dataStore.saveData(GlobalKey.MAPOBJECT, this.map);
+
+        this.options.toolBox && this.toolBox()
+
+        // L.polygon([
+        //     [31, 122],
+        //     [33, 125]
+        // ]).addTo(this.map).bindPopup("I am a polygon.");
+    }
+    polygon = (latlng, options) => {
+        return L.polygon(latlng, options).addTo(this.map)
     }
 
+    polyline = (latlng, options) => {
+        return L.polyline(latlng, options).addTo(this.map)
+    }
+
+    marker = (latlng, options) => {
+        return L.marker(latlng, options).addTo(this.map)
+    }
+
+    circleMarker = (latlng, options) => {
+        return L.circleMarker(latlng, options).addTo(this.map)
+    }
+    icon = (options) => {
+        return L.icon(options)
+    }
     mapBounds(mapview) {
         //限制地图边界
         let southWest = new L.latLng(-90, -720);
@@ -350,5 +379,130 @@ export default class MapObject {
                     break;
             }
         }
+    }
+
+    /**
+     * 内部方法
+     * 创建 dom 元素
+     * @memberof MapObject
+     */
+    _creatElemt = (ele, options) => {
+        if (!ele) {
+            throw new Error("ele is not defined")
+        }
+        let eleDom = document.createElement(ele)
+        for (let key in options) {
+            if (key !== "innerHTML") {
+                eleDom.setAttribute(key, options[key]);
+            } else {
+                eleDom.innerHTML = options[key]
+            }
+        }
+        return eleDom
+    }
+    _createToolBoxDom = () => {
+        var that = this
+        var menuList = ['ranging', 'ebl']
+        var toolBoxList
+        var fragment = document.createDocumentFragment();
+
+        var toolBoxBtn = this._creatElemt("span", {
+            innerHTML: "地图工具箱 <span id='slidericon' class='iconfont icondown'></span>"
+        })
+
+        var openMenu = false
+
+        var toggleBoxIcon = function () {
+            openMenu = !openMenu
+            var boxIcon = document.querySelector('#slidericon')
+            boxIcon.classList = openMenu ? "iconfont iconup" : "iconfont icondown rotate"
+            var mapList = document.querySelector('#toolBoxList')
+            mapList.style.display = openMenu ? "block" : "none"
+
+            if (openMenu) {
+                that.map.doubleClickZoom.disable();
+            } else {
+                that.map.doubleClickZoom.enable()
+            }
+        }
+
+        toolBoxBtn.onclick = function (e) {
+            e.stopPropagation()
+            e.preventDefault()
+            toggleBoxIcon()
+        }
+
+        fragment.appendChild(toolBoxBtn)
+
+        var list = this._creatElemt("ul", {
+            style: "display: none",
+            id: "toolBoxList"
+        })
+
+        menuList.forEach((item, index) => {
+            let li = this._creatElemt("li", {
+                innerHTML: item
+            })
+            li.onclick = () => {
+                that[item].call(that)
+                toggleBoxIcon()
+            }
+            list.appendChild(li)
+        })
+
+        fragment.appendChild(list)
+        /* fragment.onclick= function (e){
+            e.stopPropagation()
+            e.preventDefault()
+        }
+
+        fragment.ondblclick= function (e){
+            e.stopPropagation()
+            e.preventDefault()
+        } */
+
+
+        var info = L.control();
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'mapToolBox');
+            this.update();
+            return this._div;
+        };
+
+        info.update = function (props) {
+            this._div.appendChild(fragment)
+        };
+
+        info.addTo(this.map);
+    }
+    /**
+     *地图工具箱
+     *
+     * @memberof MapObject
+     */
+    toolBox = () => {
+        this._createToolBoxDom()
+    }
+
+    /**
+     * 测距方法
+     *
+     * @memberof MapObject
+     */
+    ranging = () => {
+        console.log("ranging")
+        var measureTool = new L.control.measureControl({
+            "position": "bottomright"
+        });
+        measureTool.addTo(this.map);
+    }
+
+    /**
+     * 电子方位线
+     *
+     * @memberof MapObject
+     */
+    ebl = () => {
+        console.log("Ebl")
     }
 }
