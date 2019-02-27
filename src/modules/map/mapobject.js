@@ -36,7 +36,7 @@ export default class MapObject {
             //用户 key
             key: '',
             //工具箱
-            toolBox: true,
+            toolBox: false,
             mapType: "map", //'map'/'sat'/'chart'
             mapobject: "", //地图对象
             mapLayer: L.layerGroup([])  //图层

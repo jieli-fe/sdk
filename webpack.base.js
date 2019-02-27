@@ -10,7 +10,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = {
     entry: {
-        index: path.resolve(__dirname, "./src/index.js"),
+        loongship: path.resolve(__dirname, "./src/index.js"),
         demo: path.resolve(__dirname, "./src/demo/demo.js"),
     },
     output: {
@@ -64,9 +64,8 @@ module.exports = {
         new CleanWebpackPlugin(["dist"]),
 
         new MiniCssExtractPlugin({
-            filename: '[name].[chunkhash:6].css',
-            chunkFilename: '[id].[chunkhash:6].css'
-            // filename: 'ls.css'
+            filename: '[name].css',
+            // chunkFilename: '[id].[chunkhash:6].css'
         }),
 
         new HtmlWebpackPlugin({

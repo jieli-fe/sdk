@@ -2,11 +2,11 @@
   "name": "loongshipsdk",
   "version": "1.0.45",
   "description": "",
-  "main": "lib/index.js",
+  "main": "lib/loongship.js",
+  "style": "lib/loongship.css",
   "scripts": {
     "start": "webpack-dev-server --mode development --config webpack.dev.js",
-    "build": "webpack --progress --config webpack.prod.js && rm lib/demo.js && rm lib/index.html",
-    "update": "npm version patch && git push && npm publish"
+    "build": "webpack --progress --config webpack.prod.js && rm lib/demo.js && rm lib/index.html && rm lib/demo.css"
   },
   "author": "",
   "license": "ISC",
