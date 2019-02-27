@@ -48,8 +48,8 @@ export default class MapObject {
 
         Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "MAPOBJECT-SELF-CHANGE", this.mapChangeEvent);
         L.Browser.touch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
-        this.initialize(mapId, options);
-
+        var mapArea = this.initialize(mapId, options);
+        return mapArea
     }
     _arrayToLatLng(arr) {
         return Array.isArray(arr) && arr.length > 1
@@ -87,29 +87,7 @@ export default class MapObject {
         dataStore.saveData(GlobalKey.MAPOBJECT, this.map);
 
         this.options.toolBox && this.toolBox()
-
-        // L.polygon([
-        //     [31, 122],
-        //     [33, 125]
-        // ]).addTo(this.map).bindPopup("I am a polygon.");
-    }
-    polygon = (latlng, options) => {
-        return L.polygon(latlng, options).addTo(this.map)
-    }
-
-    polyline = (latlng, options) => {
-        return L.polyline(latlng, options).addTo(this.map)
-    }
-
-    marker = (latlng, options) => {
-        return L.marker(latlng, options).addTo(this.map)
-    }
-
-    circleMarker = (latlng, options) => {
-        return L.circleMarker(latlng, options).addTo(this.map)
-    }
-    icon = (options) => {
-        return L.icon(options)
+        return map
     }
     mapBounds(mapview) {
         //限制地图边界

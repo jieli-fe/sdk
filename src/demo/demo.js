@@ -18,10 +18,10 @@ window.map = map
 /**
  * polygon
  */
-
-console.log(map.polygon)
 var latlng = [[31, 122],[33, 125]]
-map.polygon(latlng).bindPopup("I am a polygon.")
+
+var ac = LS.polygon(latlng).bindPopup("I am a polygon --ls.")
+ac.addTo(map)
 
 /**
  * polyline
@@ -31,25 +31,25 @@ var polyline = [
     [33, 133],
     [25, 144]
 ]
-var aa = map.polyline(polyline).bindPopup("i am a polyline.")
-
+var polyline = LS.polyline(polyline).bindPopup("i am a polyline.")
+polyline.addTo(map) 
 
 /**
  * circleMarker
  * 
  */
 
-map.circleMarker([29, 121],{
+var circ = LS.circleMarker([29, 121],{
     color: "red",
     radius: 1
 }).bindPopup("123").openPopup();
-
+circ.addTo(map)
 
 /**
  *  marker
  * 
 */
-var myIcon = map.icon({
+var myIcon = LS.icon({
     iconUrl: 'https://cdn.icon-icons.com/icons2/259/PNG/128/ic_location_on_128_28437.png',
     iconSize: [128, 128],
     iconAnchor:  [64, 118],
@@ -62,11 +62,11 @@ var myIcon = map.icon({
 //     iconAnchor:  [12, 41],
 //     popupAnchor: [1, -34],
 // });
-map.marker([29, 121],{
+var marker = LS.marker([29, 121],{
     icon : myIcon,
     title: "ttttttt"
 }).bindPopup("marker").openPopup();
-
+marker.addTo(map)
 
 function displayControlLayer() {
     var layerIndex = 0;

@@ -5,9 +5,9 @@ import ShipTrace from './modules/ship/shiptrace';
 import "leaflet/dist/leaflet.css"
 import { version } from "../package.json"
 import "./stylus/index.styl"
-import L from "leaflet"
-function LoongshipMap(params) {
+import { polygon, polyline, marker, addTo, circleMarker, icon } from "./modules/layer"
 
+function LoongshipMap(params) {
     //地图
     function map(mapId, options) {
         return new Map(mapId, options);
@@ -30,8 +30,13 @@ function LoongshipMap(params) {
     }
 
     return {
-        updateTag: '1.0.1',
-        L: L,
+        updateTag: '1.0.02',
+        polygon,
+        polyline,
+        marker,
+        addTo,
+        circleMarker,
+        icon,
         version: version,
         map: map,
         ship: ship,
