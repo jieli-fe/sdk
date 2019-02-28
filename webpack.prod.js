@@ -10,7 +10,8 @@ let prod = merge(baseConfig, {
         publicPath: './',
         path: path.resolve(__dirname, "lib"),
         filename: '[name].js?[hash:8]',
-        library: 'LS',
+        libraryExport: "default",
+        library: 'Ls',
         libraryTarget: 'umd'
     },
     /* optimization: {

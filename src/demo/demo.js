@@ -5,7 +5,7 @@ window.LS = LS
 import "./app.styl"
 
 
-
+ 
 var map = LS.map("map", {
     center: [31, 122],
     zoom: 6,
@@ -18,7 +18,7 @@ window.map = map
 /**
  * polygon
  */
-var latlng = [[31, 122],[33, 125]]
+var latlng = [[30, 122],[33, 115]]
 
 var ac = LS.polygon(latlng).bindPopup("I am a polygon --ls.")
 ac.addTo(map)
@@ -56,12 +56,7 @@ var myIcon = LS.icon({
     popupAnchor: [0, -100],
 });
 
-// var myIcon = map.icon({
-//     iconUrl: 'https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png',
-//     iconSize: [25,41],
-//     iconAnchor:  [12, 41],
-//     popupAnchor: [1, -34],
-// });
+
 var marker = LS.marker([29, 121],{
     icon : myIcon,
     title: "ttttttt"
