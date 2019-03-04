@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-
+console.log(2)
 let httpType = ['get', 'post'];
 let http = {};
 

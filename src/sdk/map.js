@@ -1,6 +1,6 @@
 import L from "leaflet"
-import Constants from "../modules/constants/Constants";
-import { ChartLayer } from "../modules/utils/ChartLayer";
+import Constants from "../config/Constants";
+import { ChartLayer } from "../extends/ChartLayer";
 
 (function () {
     L.Map.addInitHook(function () {

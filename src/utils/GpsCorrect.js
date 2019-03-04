@@ -1,9 +1,9 @@
-import Constants from '../constants/Constants';
-import Globalkey from "../constants/Globalkey";
-import {
-    datastore
-} from "../utils/DataStore";
-import offsermap from "./exportGpsCorrectData.js"   //TODO: 这个优化后删除 by:lijie
+import Constants from '../config/Constants';
+import Globalkey from "../config/Globalkey";
+import { datastore } from "./DataStore";
+import offsermap from "../utils/exportGpsCorrectData"
+
+
 const pi = 3.14159265358979324;
 const a = 6378245.0;
 const ee = 0.00669342162296594323;

@@ -7,7 +7,7 @@ import GlobalKey from "../constants/Globalkey";
 import Eventkey from "../constants/Eventkey";
 import { datastore } from "../utils/DataStore";
 import { Events } from "../utils/EventManageUtil";
-import http from "../utils/axios"
+// import http from "../utils/axios"
 export default class ShipInfo {
     constructor() {
         this.options = Object.create({

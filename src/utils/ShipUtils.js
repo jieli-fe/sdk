@@ -1,21 +1,11 @@
-import {
-    datastore
-} from "../utils/DataStore";
-import Globalkey from "../constants/Globalkey";
-import driveshipimg from "../../images/unshipfleetdrive.png";
-import stopshipimg from "../../images/unshipfleetstop.png";
+import { datastore } from "./DataStore";
+import Globalkey from "../config/Globalkey";
+import driveshipimg from "../images/unshipfleetdrive.png";
+import stopshipimg from "../images/unshipfleetstop.png";
 
-import {
-    duToGpsDMS,
-    gpsToDu,
-    duToGpsDM
-} from "../utils/GpsUtil";
-import {
-    LongToStr2,
-    formatAnchorTime,
-    formatAisTime
-} from "../utils/DateUtils";
-import Constants from "../constants/Constants";
+import { duToGpsDMS, gpsToDu, duToGpsDM } from "../utils/GpsUtil";
+import { LongToStr2, formatAnchorTime, formatAisTime } from "../utils/DateUtils";
+import Constants from "../config/Constants";
 /**
  *
  * 获取船舶方向
@@ -67,7 +57,7 @@ function getFleetShipData(mmsi) {
             }
         }
         return shipdata;
-    } catch (e) {}
+    } catch (e) { }
     return shipdata;
 }
 /**
@@ -403,7 +393,7 @@ function filterNowVoyageData(voyageData, shipMmsi) {
         voyageData.data = pointlist;
         voyageData.othervalue = newstoppoint;
         return voyageData;
-    } catch (e) {}
+    } catch (e) { }
     return voyageData;
 }
 

@@ -1,7 +1,7 @@
 
 import L from "leaflet"
 import "../extends/rotatedmarker"
-import Constants from "../modules/constants/Constants";
+import Constants from "../config/Constants";
 import http from "../utils/axios"
 import { LonLatTrans } from "../utils/GpsCorrect";
 import { shipStatu, getRuningIcon, getStopIcon } from "../utils/ShipUtils";

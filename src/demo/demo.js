@@ -223,6 +223,6 @@ var lsActions = {
     dd: function () { }
 }
 
-window.onload = function () {
-    lsActions.addShip("200042456")
-}
+// window.onload = function () {
+//     lsActions.addShip("200042456")
+// }

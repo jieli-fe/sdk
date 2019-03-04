@@ -22,7 +22,7 @@ L.plugin.AddShip = L.Class.extend({
         this.layers = L.layerGroup()
         this.initShip(shipId, options)
             .then((shipData) => {
-                // console.log(shipData)
+                console.log(shipData)
                 this.drawShip(shipData[0], options);
             })
     },

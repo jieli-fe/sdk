@@ -1,6 +1,5 @@
 import axios from 'axios';
 import qs from 'qs';
-
 let httpType = ['get', 'post'];
 let http = {};
 
@@ -23,9 +22,12 @@ axios.interceptors.response.use(
 
         if (response.status === 200) {
             return response.data
+        }else{
+            console.log('请求出错，请稍后再试')
+            return Promise.reject(error)
         }
 
-        console.log('请求出错，请稍后再试');
+        
 
     },
     error => {
