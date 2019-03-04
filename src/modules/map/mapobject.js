@@ -49,7 +49,7 @@ export default class MapObject {
         Events.addEvent(Eventkey.MAP_TYPE_CHANGE_KEY, "MAPOBJECT-SELF-CHANGE", this.mapChangeEvent);
         L.Browser.touch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
         var mapArea = this.initialize(mapId, options);
-        return mapArea
+        // return mapArea
     }
     _arrayToLatLng(arr) {
         return Array.isArray(arr) && arr.length > 1

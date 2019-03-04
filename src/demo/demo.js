@@ -1,67 +1,62 @@
 // import LS from "../../lib/index"
 // window.LS = LS
-import LS from "../../src/index"
-window.LS = LS
+import Ls from "../../src/index"
+window.Ls = Ls
 import "./app.styl"
 
 
- 
-var map = LS.map("map", {
+
+var map = Ls.map("map", {
     center: [31, 122],
-    zoom: 6,
+    // center: [39.73, -104.99],
+    zoom: 8,
     mapType: 'map', //'map'/'sat'/'chart'
-    key: '48755a5ab4064e7a91b60ddecc3d8c11',
+    key: '48755a5ab4064e7a91b60ddecc3d8c11'
 });
+var ship, trace;
 window.map = map
+window.ship = ship
+window.trace = trace
+//map.setMapType("sat");
+/* 
 
+//polygon
+var latlng = [[30, 122], [33, 115]]
 
-/**
- * polygon
- */
-var latlng = [[30, 122],[33, 115]]
-
-var ac = LS.polygon(latlng).bindPopup("I am a polygon --ls.")
+var ac = Ls.polygon(latlng).bindPopup("I am a polygon --ls.")
 ac.addTo(map)
 
-/**
- * polyline
- */
+
+//polyline
 var polyline = [
     [31, 122],
     [33, 133],
     [25, 144]
 ]
-var polyline = LS.polyline(polyline).bindPopup("i am a polyline.")
-polyline.addTo(map) 
+var polyline = Ls.polyline(polyline).bindPopup("i am a polyline.")
+polyline.addTo(map)
 
-/**
- * circleMarker
- * 
- */
-
-var circ = LS.circleMarker([29, 121],{
+//circleMarker
+var circ = Ls.circleMarker([29, 121], {
     color: "red",
     radius: 1
 }).bindPopup("123").openPopup();
 circ.addTo(map)
 
-/**
- *  marker
- * 
-*/
-var myIcon = LS.icon({
+//marker
+var myIcon = Ls.icon({
     iconUrl: 'https://cdn.icon-icons.com/icons2/259/PNG/128/ic_location_on_128_28437.png',
     iconSize: [128, 128],
-    iconAnchor:  [64, 118],
+    iconAnchor: [64, 118],
     popupAnchor: [0, -100],
 });
 
 
-var marker = LS.marker([29, 121],{
-    icon : myIcon,
+var marker = Ls.marker([29, 121], {
+    icon: myIcon,
     title: "ttttttt"
 }).bindPopup("marker").openPopup();
-marker.addTo(map)
+marker.addTo(map) */
 
 function displayControlLayer() {
     var layerIndex = 0;
@@ -103,22 +98,22 @@ actions.forEach((item, index) => {
             let value
             if (fnName === 'setCenter') {
                 value = document.getElementById(valueInput).value.split(',')
-                fnName && lsActions[fnName].call(null, value[0], value[1])
+                fnName && lsActions[fnName].call(lsActions, value[0], value[1])
                 return
             }
 
             if (valueInput) {
                 value = document.getElementById(valueInput).value
-                fnName && lsActions[fnName].call(null, value)
+                fnName && lsActions[fnName].call(lsActions, value)
                 return
             }
 
             if (radioName) {
                 value = getRadioValue(radioName)
-                fnName && lsActions[fnName].call(null, value)
+                fnName && lsActions[fnName].call(lsActions, value)
                 return
             }
-            fnName && lsActions[fnName].call(null)
+            fnName && lsActions[fnName].call(lsActions)
         }
     }
 })
@@ -137,6 +132,7 @@ function getRadioValue(tagName) {
 }
 
 var lsActions = {
+    ship: null,
     setCenter: function (lat, lng) {
         map.setCenter(lat, lng)
     },
@@ -156,7 +152,6 @@ var lsActions = {
             return
         }
         alert("输入的值为:" + mapType + ",请检查地图类型是否设置正确")
-
     },
     getMapType: function () {
         var str = ''
@@ -176,17 +171,58 @@ var lsActions = {
         }
         alert("当前地图类型为: " + str)
     },
-    addShip: function (shipId) {
-        if(!isNaN(shipId)){
-            LS.ship(shipId);
-        }else{
+    addShip(shipId) {
+        if (!isNaN(shipId)) {
+            ship = Ls.ship(shipId,{
+                img: 'https://www.amap.com/assets/img/single_marker.png',
+                offset: [20, 62],
+                locate: false,
+                rotate: 0,
+                showTag: true,
+                tag: '123'
+            });
+            ship.addTo(map)
+        } else {
             throw new Error('请输入船舶的 mmis')
         }
-     },
-    showTrace: function (shipId, startTime, endTime, options) {
-        LS.trace(shipId, startTime, endTime, options);
     },
+    remove: function () {
+        ship.remove()
+    },
+    setImg: function (img) {
+        ship.setImg(img)
+    },
+    setLocate: function (map) {
+        ship.setLocate()
+    },
+    setRotate: function (deg) {
+        ship.setRotate(deg)
+    },
+    setTag: function (tag) {
+        ship.setTag(tag)
+    },
+    clearTag: function () {
+        ship.clearTag()
+    },
+    setOffset: function (offset) {
+        var arr = offset.split(',')
+        arr && ship.setOffset(arr)
+
+    },
+    getShip: function () {
+        ship.getShip().then((data)=>{
+            alert(JSON.stringify(data))
+        })
+     },
+    setTraceOptions: function () { },
+    setFitBounds: function () { },
+    setSparse: function () { },
+    getTrace: function () { },
     dd: function () { },
     dd: function () { },
     dd: function () { }
+}
+
+window.onload = function () {
+    lsActions.addShip("200042456")
 }

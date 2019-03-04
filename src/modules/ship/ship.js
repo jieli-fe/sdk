@@ -12,6 +12,7 @@ import http from "../utils/axios"
 // require("../utils/rotatedmarker");
 export default class Ship {
     constructor(shipId, options) {
+        this.layers = L.layerGroup();
         this.defaultOptions = {
             mapview: datastore.getData(GlobalKey.MAPOBJECT),
             shipmarker: ""
@@ -42,7 +43,7 @@ export default class Ship {
      * 获取船舶数据
      * @memberof Ship
      */
-    initShip(shipId, options) {
+    initShip(shipId, options= {}) {
         var key = datastore.getData(GlobalKey.GLOBAL_DATA_KEY) || Constants.DATA_API_TEST_KEY;
 
         if (!shipId) {
@@ -69,7 +70,7 @@ export default class Ship {
                 }
 
             })
-            .catch(() => {
+            .catch((error) => {
                 Events.fire(_self.events.Loaderror_Event_Key);
                 throw error;
             })
@@ -140,8 +141,9 @@ export default class Ship {
             this.setOffset(cusoptions.offset);
         }
 
-        this.options.mapview.addLayer(Lmarker);
-        this.options.mapview.setView(latlon, this.options.mapview.getZoom());
+        this.layers.addTo(Lmarker)
+        // this.options.mapview.addLayer(Lmarker);
+        // this.options.mapview.setView(latlon, this.options.mapview.getZoom());
     }
 
     /**
@@ -277,15 +279,17 @@ export default class Ship {
         }
     }
 
-    // getShip() { }
-
     /**
      *
      * 添加到地图上
      * @memberof Ship
      */
-    addTo() {
-        try {
+    addTo(map) {
+        var lay = map.addLayer(this.layers)
+        console.log(lay)
+        // this.options.mapView = map;
+        // map.addLayer(this.options.shipmarker)
+        /* try {
             //判断船舶是否在地图上，若未在，则添加到地图，若在，则不予添加
             let mapview = this.options.mapview;
             let shipMarker = this.options.shipmarker;
@@ -295,14 +299,21 @@ export default class Ship {
             }
         } catch (e) {
             console.log(e);
-        }
+        } */
     }
     //从地图上移除船舶图标
-    remove() {
-        let mapview = this.options.mapview;
-        let shipMarker = this.options.shipmarker;
-        if (!shipMarker) return;
-        mapview.removeLayer(shipMarker);
+    remove(map) {
+        map.remove(this.layers)
+        // let shipMarker = this.options.shipmarker;
+        // if (!shipMarker) return;
+        // this.options.mapView.removeLayer(shipMarker);
+        // this.options.mapView = null;
+
+
+        // let mapview = this.options.mapview;
+        // let shipMarker = this.options.shipmarker;
+        // if (!shipMarker) return;
+        // mapview.removeLayer(shipMarker);
     }
     /**
      *

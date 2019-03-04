@@ -10,7 +10,12 @@ export default {
                 permanent: true
             }
         }
-
-
+    },
+    ship: {
+        marker: {
+            permanent: true,
+            className: "leaflet-label-ship",
+            direction: "right"
+        }
     }
 }

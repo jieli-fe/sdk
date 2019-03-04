@@ -6,16 +6,22 @@ import "leaflet/dist/leaflet.css"
 import { version } from "../package.json"
 import "./stylus/index.styl"
 import { polygon, polyline, marker, addTo, circleMarker, icon } from "./modules/layer"
+import L from "leaflet"
+import "./modules/map/mbj"
+import "./modules/map/test"
 
 function LoongshipMap(params) {
+
     //地图
     function map(mapId, options) {
-        return new Map(mapId, options);
+        //return new Map(mapId, options);
+        return L.map(mapId, options);
     }
 
     //船舶
     function ship(shipId, options) {
-        return new Ship(shipId, options);
+        this._ship = L.plugin.addShip(shipId, options)
+        return this._ship
     }
 
     //船舶基本信息
@@ -30,7 +36,7 @@ function LoongshipMap(params) {
     }
 
     return {
-        updateTag: '1.0.02',
+        updateTag: '1.0.03',
         polygon,
         polyline,
         marker,
