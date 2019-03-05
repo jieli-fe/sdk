@@ -48,7 +48,7 @@
                 <button class="action" data-type="ship" data-fn="setImg" data-inputId="setImg">设置船舶图片</button>
 
 
-                <button class="action" data-type="ship" data-fn="setLocate" >船舶位置居中</button>
+                <button class="action" data-type="ship" data-fn="setLocate">船舶位置居中</button>
                 <br>
                 <input type="text" id="shipRotate" value="0">
                 <button class="action" data-type="ship" data-fn="setRotate" data-inputId="shipRotate">设置船舶icon旋转角度</button>
@@ -60,39 +60,56 @@
                 <br>
                 <input type="text" id="iconOffset" value="30,30">
                 <button class="action" data-type="ship" data-fn="setOffset" data-inputId="iconOffset">船舶icon偏移</button>
-                <button class="action" data-type="ship" data-fn="getShip" >获取船舶数据</button>
-                
+                <button class="action" data-type="ship" data-fn="getShip">获取船舶数据</button>
+
             </div>
+        </div>
 
+        <div class="layer_map">
+            <div class="title">船舶轨迹</div>
+            <div class="layer_contol">
 
-            <div class="layer_map">
-                <div class="title">船舶轨迹</div>
-                <div class="layer_contol">
-                    <textarea type="text" id="traceOptions" value="轨迹参数">
-                    </textarea>
-                    <button class="action" data-type="trace" data-fn="setOptions" data-inputId="traceOptions">设置轨迹参数</button>
-    
-                    <button class="action" data-type="trace" data-fn="setFitBounds" >船舶居中</button>
+                <button class="action" data-type="trace" data-fn="addTrace">添加轨迹</button>
+                <button class="action" data-type="trace" data-fn="clearTrace">删除轨迹</button>
 
-                    <input type="text" id="traceSparse" value="40">
-                    <button class="action" data-type="trace" data-fn="setSparse" data-inputId="traceSparse">设置抽稀值</button>
-    
-                    <button class="action" data-type="trace" data-fn="getTrace" >获取船舶轨迹数据</button>
-    
-                </div>
+                <br>
+                <textarea type="text" style="width: 80%; height: 200px" id="traceOptions" value="轨迹参数">
+{"lineColor":"yellow",
+"lineWidth":2,
+"lineStyle":"bold",
+"pointColor":"blue",
+"pointWeight":3,
+"sparse":0,
+"timeFormat":"yyyy-MM-dd HH:mm:ss",
+"timeAnti":false,
+"fitBounds":true
+}</textarea>
+                <br>
+                <button class="action" data-type="trace" data-fn="setTraceOptions" data-inputId="traceOptions">设置轨迹参数</button>
+
+                <button class="action" data-type="trace" data-fn="setFitBounds">船舶居中</button>
+
+                
+
+                <input type="text" id="traceSparse" value="40">
+                <button class="action" data-type="trace" data-fn="setSparse" data-inputId="traceSparse">设置抽稀值</button>
+
+                <button class="action" data-type="trace" data-fn="getTrace">获取船舶轨迹数据</button>
+
+            </div>
         </div>
 
         <div class="layer_map">
             <div class="title">轨迹控制</div>
             <div class="layer_contol">
-                <button>设置</button>
+                <button>设置</button>12
             </div>
         </div>
 
         <div class="layer_map">
             <div class="title">天气控制</div>
             <div class="layer_contol">
-                <button>设置</button>
+                <button>设置</button>21
             </div>
         </div>
     </div>

@@ -24,3 +24,6 @@ export function addTo(map) {
     console.log(map)
     return map ? map : datastore.getData(GlobalKey.MAPOBJECT)
 }
+export function latLng(lat, lng, alt) {
+    return L.latLng(lat, lng, alt)
+}

@@ -5,7 +5,7 @@ import stopshipimg from "../images/unshipfleetstop.png";
 
 import { duToGpsDMS, gpsToDu, duToGpsDM } from "../utils/GpsUtil";
 import { LongToStr2, formatAnchorTime, formatAisTime } from "../utils/DateUtils";
-import Constants from "../config/Constants";
+// import Constants from "../config/Constants";
 /**
  *
  * 获取船舶方向

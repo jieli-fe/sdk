@@ -2,7 +2,6 @@
 import L from "leaflet"
 import "../extends/rotatedmarker"
 import Constants from "../config/Constants";
-import http from "../utils/axios"
 import { LonLatTrans } from "../utils/GpsCorrect";
 import { shipStatu, getRuningIcon, getStopIcon } from "../utils/ShipUtils";
 import defaultMarker from "../images/single_marker.png"
@@ -33,7 +32,7 @@ L.plugin.AddShip = L.Class.extend({
     },
     post(url, params) {
         return new Promise((resolve, reject) => {
-            http.post(url, params)
+            L.http.post(url, params)
                 .then((response) => {
                     if (parseInt(response.status) === Constants.LOAD_DATA_SUCESS) {
                         resolve(response.result)
@@ -49,7 +48,7 @@ L.plugin.AddShip = L.Class.extend({
         })
     },
     initShip(shipId, options = {}) {
-        var key = L.params.map.key
+        var key = L.LsOptions.map.key
 
         if (!shipId) {
             throw "没有船舶 id";

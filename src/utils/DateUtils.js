@@ -267,7 +267,7 @@ function stringToTime(string) {
 //格式为"YYYY-mm-dd hh:mm:ss"  "2014-07-10 10:21:12";
 //将字符串时间改为时间戳,返回格式yyyy-MM-dd h:m:s safari浏览器不支持
 function strToLong(stringTime) {
-    return stringToTime(stringTime); /*Date.parse(new Date(stringTime)) 此种写法Safari不兼容*/ ;
+    return stringToTime(stringTime); /*Date.parse(new Date(stringTime)) 此种写法Safari不兼容*/;
 }
 //将时间戳转换为格式化时间,
 function LongToStr(timemills) {
@@ -276,10 +276,10 @@ function LongToStr(timemills) {
     return newDate.Format('yyyy-MM-dd hh:mm:ss');
 }
 
-function LongToStr2(timemills) {
+function LongToStr2(timemills, format = 'yyyy/MM/dd hh:mm:ss') {
     var newDate = new Date();
     newDate.setTime(timemills);
-    return newDate.Format('yyyy/MM/dd hh:mm:ss');
+    return newDate.Format(format);
 }
 /******
  *
@@ -499,15 +499,15 @@ Date.prototype.DateAdd = function (strInterval, Number) {
         case 'q':
             return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number * 3,
                 dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp
-                .getSeconds());
+                    .getSeconds());
         case 'm':
             return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number, dtTmp
                 .getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp
-                .getSeconds());
+                    .getSeconds());
         case 'y':
             return new Date((dtTmp.getFullYear() + Number), dtTmp.getMonth(), dtTmp
                 .getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp
-                .getSeconds());
+                    .getSeconds());
     }
 }
 //日期格式化
@@ -531,13 +531,13 @@ Date.prototype.format = function (format) {
     }
     return format;
 }
-export{
+export {
     LongToStr2,
     formatAnchorTime,
     formatAisTime,
     dateDiff,
     formatDiffTime,
-    TwoDateSub2, 
+    TwoDateSub2,
     TwoDateSub,
     strToLong,
     LongToStr,

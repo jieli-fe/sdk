@@ -73,7 +73,7 @@ function displayControlLayer() {
     }
 }
 var layerContorlfn = displayControlLayer()
-layerContorlfn(1)
+layerContorlfn(2)
 function getAttr(target, att) {
     return target.getAttribute(att) ? target.getAttribute(att) : null
 }
@@ -173,8 +173,9 @@ var lsActions = {
     },
     addShip(shipId) {
         if (!isNaN(shipId)) {
-            ship = Ls.ship(shipId,{
-                img: 'https://www.amap.com/assets/img/single_marker.png',
+            ship = Ls.ship(shipId, {
+                // img: 'https://www.amap.com/assets/img/single_marker.png',
+                img: '',
                 offset: [20, 62],
                 locate: false,
                 rotate: 0,
@@ -210,15 +211,51 @@ var lsActions = {
 
     },
     getShip: function () {
-        ship.getShip().then((data)=>{
+        ship.getShip().then((data) => {
             alert(JSON.stringify(data))
         })
-     },
-    setTraceOptions: function () { },
-    setFitBounds: function () { },
-    setSparse: function () { },
-    getTrace: function () { },
-    dd: function () { },
+    },
+    addTrace: function () {
+        trace = Ls.trace("636015511", 1544508577, 1545372577, {
+            color: '#0033FF'
+        })
+        trace.addTo(map)
+    },
+    clearTrace: function () {
+        trace && trace.remove()
+    },
+    setTraceOptions: function (value) {
+        console.log(value)
+        function getOpts(value) {
+            try {
+                return JSON.parse(value)
+            } catch (error) {
+                alert("检查对象是否按照标准格式输入")
+            }
+            
+        }
+        var opts = getOpts(value)
+        console.log(opts)
+        trace.setOptions(opts)
+    },
+    setFitBounds: function () {
+        if (trace) {
+            trace.setFitBounds()
+        } else {
+            alert("请先添加轨迹,然后再操作")
+        }
+    },
+    setSparse: function (number) {
+        trace.setSparse(number)
+    },
+    getTrace: function () {
+        if (trace) {
+            alert(JSON.stringify(trace.getTrace()))
+        } else {
+            alert("请先添加轨迹,然后在获取数据")
+        }
+    },
+
     dd: function () { },
     dd: function () { }
 }
