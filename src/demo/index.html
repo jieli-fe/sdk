@@ -42,14 +42,12 @@
 
                 <input type="text" id="shipMMSI" value="200042456">
                 <button class="action" data-type="ship" data-fn="addShip" data-inputId="shipMMSI">添加船舶</button>
-                <button class="action" data-type="ship" data-fn="remove" data-inputId="shipMMSI">删除船舶</button>
+                <button class="action" data-type="ship" data-fn="remove" data-inputId="shipMMSI">删除船舶</button> <button class="action" data-type="ship" data-fn="setLocate">船舶位置居中</button>
                 <br>
                 <input type="text" id="setImg" value="https://www.amap.com/assets/img/single_marker.png">
                 <button class="action" data-type="ship" data-fn="setImg" data-inputId="setImg">设置船舶图片</button>
-
-
-                <button class="action" data-type="ship" data-fn="setLocate">船舶位置居中</button>
                 <br>
+
                 <input type="text" id="shipRotate" value="0">
                 <button class="action" data-type="ship" data-fn="setRotate" data-inputId="shipRotate">设置船舶icon旋转角度</button>
                 <br>
@@ -58,7 +56,7 @@
                 <button class="action" data-type="ship" data-fn="clearTag">删除船舶标签</button>
 
                 <br>
-                <input type="text" id="iconOffset" value="30,30">
+                <input type="text" id="iconOffset" value="[0,0]">
                 <button class="action" data-type="ship" data-fn="setOffset" data-inputId="iconOffset">船舶icon偏移</button>
                 <button class="action" data-type="ship" data-fn="getShip">获取船舶数据</button>
 

@@ -5,12 +5,22 @@ import Constants from "../config/Constants";
 import { LonLatTrans } from "../utils/GpsCorrect";
 import { shipStatu, getRuningIcon, getStopIcon } from "../utils/ShipUtils";
 import defaultMarker from "../images/single_marker.png"
+import defaultShipIcon from "../images/unshipfleetdrive.png"
 
 if (!L.plugin) {
     L.plugin = {}
 }
 L.plugin.AddShip = L.Class.extend({
     initialize: function (shipId, options = {}) {
+        this._defaultIcon = {
+            iconUrl: defaultShipIcon,
+            iconSize: [32, 32],
+            iconAnchor: [16, 17],
+            popupAnchor: [0, 0],
+            shadowUrl: '',
+            shadowSize: [0, 0],
+            shadowAnchor: [0, 0]
+        }
         this.time = + new Date()
         this.shipId = shipId;
         this.shipMarker = null
@@ -82,6 +92,12 @@ L.plugin.AddShip = L.Class.extend({
             mmsi: shipdata.mmsi
         })
 
+        // this._test = L.circleMarker(latlon,{
+        //     radius:2,
+        //     color: "red"
+        // })
+        // this._addLayer(this._test)
+
         if (opts && opts.showTag && opts.tag) {
             this.shipMarker.bindTooltip("&nbsp;" + opts.tag + "&nbsp;", {
                 permanent: true,
@@ -110,10 +126,9 @@ L.plugin.AddShip = L.Class.extend({
     addTo(map) {
         this._map = map
         this._map.addLayer(this.layers)
-
     },
     remove() {
-        this.layers.clearLayers()
+        this._map.removeLayer(this.layers)
     },
 
     getShipIcon(shipdata, cusoptions) {
@@ -124,40 +139,8 @@ L.plugin.AddShip = L.Class.extend({
             return getStopIcon();
         }
     },
-    // _getImgWH(url) {
-    //     if (url) {
-    //         var img = new Image()
-    //         img.onload = function () {
-    //             console.log([img.width, img.height])
-    //             return [img.width, img.height]
-    //         }
-    //         img.onerror = function () {
-    //             return [0, 0]
-    //         }
-    //         img.src = url
-    //     }
-    //     return [0, 0]
-    // },
     _createIcon(opts = {}) {
-        var defaultIcon = {
-            iconUrl: defaultMarker,
-            iconSize: [39, 62],
-            iconAnchor: [20, 62],
-            popupAnchor: [0, 0],
-            shadowUrl: '',
-            shadowSize: [0, 0],
-            shadowAnchor: [0, 0]
-        }
-        // if (opts.iconUrl) {
-        //     defaultIcon.iconSize = this._getImgWH(opts.iconUrl)
-        //     defaultIcon.iconAnchor = [0, 0]
-        // }
-
-        // if (opts.shadowUrl) {
-        //     defaultIcon.shadowSize = [0, 0]
-        //     defaultIcon.shadowAnchor = [0, 0]
-        // }
-        var tmpIcon = Object.assign(defaultIcon, opts)
+        var tmpIcon = Object.assign(this._defaultIcon, opts)
         this.shipMarker.setIcon(L.icon(tmpIcon))
     },
     /**
@@ -223,5 +206,10 @@ L.plugin.AddShip.addInitHook(function () {
 })
 
 L.plugin.addShip = function (shipId, options) {
-    return new L.plugin.AddShip(shipId, options);
+
+    if (this.hasShip) {
+        return this.hasShip
+    }
+    this.hasShip = new L.plugin.AddShip(shipId, options);
+    return this.hasShip
 };

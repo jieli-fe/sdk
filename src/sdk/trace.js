@@ -260,8 +260,6 @@ L.plugin.Trace = L.Layer.extend({
      * @memberof ShipTrace
      */
     setOptions(options) {
-        debugger
-
         this.drawController(this._traceData, null, options)
         // try {
         //     this.options.traceoption = options;

@@ -7,8 +7,6 @@ import { ChartLayer } from "../extends/ChartLayer";
         let mapType = this.options.mapType;
         this.setMapType(mapType);
         this.saveParams("map",this.options)
-        console.log(1)
-        console.log(this._map)
     });
     L.Map.include({
         saveParams(key,value){

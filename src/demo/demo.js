@@ -181,7 +181,7 @@ var lsActions = {
                 rotate: 0,
                 showTag: true,
                 tag: '123'
-            });
+            })
             ship.addTo(map)
         } else {
             throw new Error('请输入船舶的 mmis')
@@ -193,6 +193,7 @@ var lsActions = {
     setImg: function (img) {
         ship.setImg(img)
     },
+
     setLocate: function (map) {
         ship.setLocate()
     },
@@ -206,9 +207,10 @@ var lsActions = {
         ship.clearTag()
     },
     setOffset: function (offset) {
-        var arr = offset.split(',')
-        arr && ship.setOffset(arr)
-
+        if(offset && ship){
+            offset = JSON.parse(offset)
+            ship.setOffset(offset)
+        }
     },
     getShip: function () {
         ship.getShip().then((data) => {

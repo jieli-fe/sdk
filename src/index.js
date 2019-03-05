@@ -8,7 +8,7 @@ L.http = http
 // import ShipInfo from "./modules/ship/shipinfo";
 // import ShipTrace from './modules/ship/shiptrace';
 import { version } from "../package.json"
-import { polygon, polyline, marker, addTo, circleMarker, icon, latLng } from "./modules/layer"
+import { polygon, polyline, marker, addTo, circleMarker, icon, latLng,circle } from "./modules/layer"
 
 import "leaflet/dist/leaflet.css"
 import "./stylus/index.styl"
@@ -47,6 +47,7 @@ function LoongshipMap(params) {
         marker,
         addTo,
         latLng,
+        circle,
         circleMarker,
         icon,
         version: version,

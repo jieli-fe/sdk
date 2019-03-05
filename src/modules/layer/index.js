@@ -27,3 +27,6 @@ export function addTo(map) {
 export function latLng(lat, lng, alt) {
     return L.latLng(lat, lng, alt)
 }
+export function circle(latlng, options, legacyOptions) {
+    return L.circle(latlng, options, legacyOptions)
+}
