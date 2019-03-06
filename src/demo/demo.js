@@ -225,9 +225,12 @@ var lsActions = {
             }
 
             trace = Ls.trace(value[0], value[1], value[2], {
-                lineColor: '#0073f5'
+                lineColor: '#0073f5',
+                sparse: 510,
+                fitBounds: true
             })
             trace.addTo(map)
+            this.setFitBounds()
         }
 
     },
@@ -244,7 +247,6 @@ var lsActions = {
     setTraceOptions: function (value) {
         if (value && trace) {
             var opts = this._getOpts(value)
-            console.log(opts)
             trace.setOptions(opts)
         }
     },

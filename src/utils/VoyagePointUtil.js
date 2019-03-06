@@ -89,7 +89,7 @@ class VoyagePointUtil {
      * @returns
      * @memberof VoyagePointUtil
      */
-    pointDataSparing(dataArray, latfiled, lngfiled, rate, map=L._map, sparsevalue) {
+    pointDataSparing(dataArray, latfiled, lngfiled, rate, map, sparsevalue) {
         var resultData = [];
         try {
             sparsevalue = sparsevalue || Constants.MIN_POINT_DISTANCE;
