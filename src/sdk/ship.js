@@ -29,7 +29,6 @@ L.plugin.AddShip = L.Class.extend({
         this.layers = L.layerGroup()
         this.initShip(shipId, options)
             .then((shipData) => {
-                // console.log(shipData)
                 this.drawShip(shipData[0], options);
             })
     },
@@ -121,6 +120,9 @@ L.plugin.AddShip = L.Class.extend({
         if (opts && opts.offset) {
             this.setOffset(opts.offset);
         }
+        if(opts && opts.locate) {
+            this.setLocate();
+        }
         this._addLayer(this.shipMarker)
     },
     addTo(map) {
@@ -133,6 +135,13 @@ L.plugin.AddShip = L.Class.extend({
 
     getShipIcon(shipdata, cusoptions) {
         let stopmark = shipStatu(shipdata.nav_status, shipdata.speed);
+        if(cusoptions.img) {
+            return L.icon({
+                iconUrl: cusoptions.img,
+                iconAnchor: cusoptions.offset,
+                iconSize: [32, 32]
+            });
+        }
         if (stopmark) {
             return getRuningIcon();
         } else {
@@ -140,7 +149,7 @@ L.plugin.AddShip = L.Class.extend({
         }
     },
     _createIcon(opts = {}) {
-        var tmpIcon = Object.assign(this._defaultIcon, opts)
+        var tmpIcon = Object.assign(this._defaultIcon, opts);
         this.shipMarker.setIcon(L.icon(tmpIcon))
     },
     /**
@@ -163,7 +172,6 @@ L.plugin.AddShip = L.Class.extend({
     //将船舶位置移动到最中央
     setLocate() {
         if (this.shipMarker) {
-            console.log(this.shipMarker.getLatLng(), this._map.getZoom())
             this._map.setView(this.shipMarker.getLatLng(), this._map.getZoom())
         }
     },
@@ -202,7 +210,6 @@ L.plugin.AddShip = L.Class.extend({
     }
 });
 L.plugin.AddShip.addInitHook(function () {
-    console.log("addInitHook")
 })
 
 L.plugin.addShip = function (shipId, options) {
