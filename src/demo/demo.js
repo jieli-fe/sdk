@@ -207,7 +207,7 @@ var lsActions = {
         ship.clearTag()
     },
     setOffset: function (offset) {
-        if(offset && ship){
+        if (offset && ship) {
             offset = JSON.parse(offset)
             ship.setOffset(offset)
         }
@@ -217,28 +217,36 @@ var lsActions = {
             alert(JSON.stringify(data))
         })
     },
-    addTrace: function () {
-        trace = Ls.trace("636015511", 1544508577, 1545372577, {
-            color: '#0033FF'
-        })
-        trace.addTo(map)
+    addTrace: function (value) {
+        if (value) {
+            value = value.split(',')
+            for (let index = 0; index < value.length; index++) {
+                value[index] = value[index] * 1
+            }
+
+            trace = Ls.trace(value[0], value[1], value[2], {
+                lineColor: '#0073f5'
+            })
+            trace.addTo(map)
+        }
+
     },
     clearTrace: function () {
         trace && trace.remove()
     },
-    setTraceOptions: function (value) {
-        console.log(value)
-        function getOpts(value) {
-            try {
-                return JSON.parse(value)
-            } catch (error) {
-                alert("检查对象是否按照标准格式输入")
-            }
-            
+    _getOpts(value) {
+        try {
+            return JSON.parse(value)
+        } catch (error) {
+            alert("检查对象是否按照标准格式输入")
         }
-        var opts = getOpts(value)
-        console.log(opts)
-        trace.setOptions(opts)
+    },
+    setTraceOptions: function (value) {
+        if (value && trace) {
+            var opts = this._getOpts(value)
+            console.log(opts)
+            trace.setOptions(opts)
+        }
     },
     setFitBounds: function () {
         if (trace) {

@@ -11,16 +11,15 @@ if (!L.plugin) {
     L.plugin = {}
 }
 L.plugin.Trace = L.Layer.extend({
-    
+
     initialize: function (shipId, startTime, endTime, options) {
-        
+
         this._traceLayer = L.layerGroup()
         // this.mergeOptions(options)
         this.getTraceData(shipId, startTime, endTime, options)
-        
     },
-    mergeOptions(options){
-        L.setOptions(this,options)
+    mergeOptions(options) {
+        L.setOptions(this, options)
     },
     saveDataLocal(data) {
         data.updateTime = + new Date()
@@ -57,7 +56,7 @@ L.plugin.Trace = L.Layer.extend({
         //跨180读处理
         lineData = ShipPointUtil.calcuteDateLineVals(lineData, "longitude", Constants.LATLON);
         var startStopData = ShipPointUtil.getStartStopDateLine(data.specialResul, lineData, "longitude");
-        var layerObject = this.drawHistroyInterface(lineData, startStopData);
+        var layerObject = this.drawHistroyInterface(lineData, startStopData, options);
         options && options.fitBounds && this.setFitBounds()
         var handledData = {
             sourceData: data,
@@ -70,18 +69,18 @@ L.plugin.Trace = L.Layer.extend({
         };
 
     },
-    drawHistroyInterface(lineData, startStopData) {
+    drawHistroyInterface(lineData, startStopData, options) {
 
         //地图对象
         let mapview = this._traceLayer;
         // let layerArray = []
-        let LineLayer = this.drawVoyageLine(lineData);
+        let LineLayer = this.drawVoyageLine(lineData, options);
         //点
-        let PointLayer = this.drawVoyagePoint(lineData);
+        let PointLayer = this.drawVoyagePoint(lineData, options);
         //启停点
         // let StartStopLayer = this.drawStartStopPoint(startStopData);
         //方向处理
-        let drectionLayer = this.drawVoyageDirection(lineData);
+        let drectionLayer = this.drawVoyageDirection(lineData, options);
         // layerArray.push(LineLayer,PointLayer,drectionLayer)
         mapview.addLayer(LineLayer);
         mapview.addLayer(PointLayer);
@@ -106,27 +105,29 @@ L.plugin.Trace = L.Layer.extend({
      * @returns
      * @memberof VoyagePoint
      */
-    drawVoyageLine(voyageLineData) {
+    drawVoyageLine(voyageLineData, options = {}) {
         let rate = Constants.LATLON;
-        let options = this.traceOption;
         let weight = (options && options.lineWidth) || 2;
         let color = (options && options.lineColor) || "#0073f5";
+        let stroke = (options && options.stroke) || true;
+        let opacity = (options && options.opacity) || 1;
         let dashArray = null;
         if (options && options.lineStyle === "dashed") {
             dashArray = "10,5";
         }
+       
         var shipVoyageLine = L.polyline([], {
-            stroke: !0,
-            weight: weight,
-            color: color,
-            opacity: 1,
-            dashArray: dashArray
+            stroke,
+            weight,
+            color,
+            opacity,
+            dashArray
         });
         for (var i in voyageLineData) {
             var lnglat = LonLatTrans(voyageLineData[i].latitude / rate, voyageLineData[i].longitude / rate);
             shipVoyageLine.addLatLng(lnglat);
         }
-        //记录下线的坐标
+        //记录下polyline的坐标,后面地图居中使用
         this._traceBounds = shipVoyageLine.getBounds()
         return shipVoyageLine;
     },
@@ -136,11 +137,10 @@ L.plugin.Trace = L.Layer.extend({
      * @param {*} voyageLineData
      * @memberof VoyagePoint
      */
-    drawVoyagePoint(voyageLineData) {
+    drawVoyagePoint(voyageLineData,options) {
         //pointColor        pointWeight         sparse
         let rate = Constants.LATLON;
         if (!voyageLineData) return;
-        let options = this.traceOption;
         let sparse = (options && options.sparse) || Constants.MIN_POINT_DISTANCE;
         //抽稀轨迹点
         var newVoyageData = ShipPointUtil.pointDataSparing(voyageLineData, "latitude", "longitude", rate, this._map, sparse);
@@ -178,7 +178,8 @@ L.plugin.Trace = L.Layer.extend({
             var pointCourse = newVoyageData[i].course || "";
             var pointTime = "";
             if (newVoyageData[i].postime) {
-                pointTime = LongToStr2(newVoyageData[i].postime * 1000).substring(5);
+                // pointTime = LongToStr2(newVoyageData[i].postime * 1000).substring(5);
+                pointTime = LongToStr2(newVoyageData[i].postime * 1000,options.timeFormat);
             }
             pointLayerGroup.addLayer(pointMarker);
             if (!speed && !pointCourse && !pointTime) {
@@ -260,6 +261,7 @@ L.plugin.Trace = L.Layer.extend({
      * @memberof ShipTrace
      */
     setOptions(options) {
+        console.log(options)
         this.drawController(this._traceData, null, options)
         // try {
         //     this.options.traceoption = options;
