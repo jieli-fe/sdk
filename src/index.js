@@ -2,6 +2,7 @@ import L from "leaflet"
 import "./sdk/map"
 import "./sdk/ship"
 import "./sdk/trace"
+// import "./sdk/tracetest"
 import http from "./utils/axios"
 L.http = http
 
